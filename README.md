@@ -1,1 +1,1 @@
-# caring-science-journals
+# caring-science-resources
