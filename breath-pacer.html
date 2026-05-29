@@ -1,0 +1,670 @@
+<div class="aurora"></div>
+
+<div class="particles">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="pacer-shell">
+  <div class="content">
+
+    <h1>Return to Presence</h1>
+
+    <p class="instruction" id="instruction">
+      Take a mindful moment to ground yourself before continuing.
+    </p>
+
+    <div class="breath-stage">
+      <div class="ripple ripple-one"></div>
+      <div class="ripple ripple-two"></div>
+      <div class="ripple ripple-three"></div>
+
+      <div class="outer-ring"></div>
+      <div class="middle-ring"></div>
+
+      <div class="breath-circle" id="breathCircle">
+
+        <span id="breathText">Breathe</span>
+
+        <div class="breath-dots">
+          <span></span>
+          <span></span>
+        </div>
+
+        <svg class="lotus-icon" viewBox="0 0 120 80">
+
+          <defs>
+            <linearGradient id="lotusGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00a7a7"/>
+              <stop offset="45%" stop-color="#256fa8"/>
+              <stop offset="100%" stop-color="#7f45d8"/>
+            </linearGradient>
+          </defs>
+
+          <path d="M60 62 C48 48 45 32 60 14 C75 32 72 48 60 62Z"></path>
+          <path d="M45 64 C30 56 22 42 26 24 C44 31 53 45 45 64Z"></path>
+          <path d="M75 64 C90 56 98 42 94 24 C76 31 67 45 75 64Z"></path>
+          <path d="M60 66 C42 67 28 61 16 48 C35 46 50 50 60 66Z"></path>
+          <path d="M60 66 C78 67 92 61 104 48 C85 46 70 50 60 66Z"></path>
+          <path d="M30 70 C48 76 72 76 90 70"></path>
+
+        </svg>
+
+      </div>
+    </div>
+
+    <div class="timer-text" id="timerText">
+      4 second inhale · 6 second exhale
+    </div>
+
+    <div class="completion-message" id="completionMessage">
+      You are grounded. Return with intention.
+    </div>
+
+    <div class="controls">
+      <button id="startBtn">Begin</button>
+
+      <button id="resetBtn" class="secondary">
+        Reset
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  font-family:
+    "Inter",
+    "Segoe UI",
+    sans-serif;
+
+  background:
+    linear-gradient(
+      -45deg,
+      #082f49,
+      #0f4c5c,
+      #4b3f72,
+      #8a7db8,
+      #f3eee7
+    );
+
+  background-size: 500% 500%;
+
+  animation:
+    gradientFlow 22s ease infinite;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 12px;
+}
+
+.aurora {
+  position: fixed;
+  inset: -20%;
+
+  background:
+    radial-gradient(circle at 20% 30%, rgba(184,216,216,0.35), transparent 35%),
+    radial-gradient(circle at 80% 20%, rgba(214,199,255,0.35), transparent 35%),
+    radial-gradient(circle at 50% 85%, rgba(248,244,239,0.22), transparent 40%);
+
+  filter: blur(28px);
+
+  animation:
+    auroraMove 18s ease-in-out infinite alternate;
+
+  pointer-events: none;
+}
+
+.particles {
+  position: fixed;
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.particles span {
+  position: absolute;
+
+  display: block;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.95),
+      rgba(220,210,255,0.35)
+    );
+
+  box-shadow:
+    0 0 22px rgba(255,255,255,0.9),
+    0 0 48px rgba(214,199,255,0.5);
+
+  animation:
+    floatUp linear infinite;
+
+  bottom: -150px;
+}
+
+.particles span:nth-child(1) { left: 6%; width: 22px; height: 22px; animation-duration: 22s; }
+.particles span:nth-child(2) { left: 18%; width: 12px; height: 12px; animation-duration: 16s; }
+.particles span:nth-child(3) { left: 32%; width: 26px; height: 26px; animation-duration: 26s; }
+.particles span:nth-child(4) { left: 48%; width: 16px; height: 16px; animation-duration: 18s; }
+.particles span:nth-child(5) { left: 62%; width: 28px; height: 28px; animation-duration: 28s; }
+.particles span:nth-child(6) { left: 74%; width: 14px; height: 14px; animation-duration: 19s; }
+.particles span:nth-child(7) { left: 86%; width: 20px; height: 20px; animation-duration: 24s; }
+.particles span:nth-child(8) { left: 94%; width: 12px; height: 12px; animation-duration: 15s; }
+
+.pacer-shell {
+  width: min(860px, 100%);
+
+  padding: 28px 34px;
+
+  border-radius: 36px;
+
+  background:
+    rgba(248,244,239,0.12);
+
+  backdrop-filter: blur(26px);
+
+  border:
+    1px solid rgba(255,255,255,0.18);
+
+  box-shadow:
+    0 35px 90px rgba(0,0,0,0.34),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+
+  position: relative;
+
+  overflow: hidden;
+
+  text-align: center;
+
+  color: #fffaf5;
+}
+
+.pacer-shell::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -40%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.12),
+      transparent 48%
+    );
+
+  animation:
+    shimmer 16s ease-in-out infinite alternate;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  font-size:
+    clamp(2rem, 4vw, 3.3rem);
+
+  margin: 0 0 14px;
+
+  font-weight: 650;
+}
+
+.instruction {
+  max-width: 640px;
+  margin: 0 auto 22px;
+  line-height: 1.6;
+  font-size: 1.05rem;
+  opacity: 1;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,0.22);
+}
+
+.breath-stage {
+  width: 260px;
+  height: 260px;
+
+  margin: 0 auto 16px;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outer-ring,
+.middle-ring,
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.outer-ring {
+  width: 240px;
+  height: 240px;
+
+  border:
+    1px solid rgba(255,255,255,0.28);
+
+  box-shadow:
+    0 0 40px rgba(214,199,255,0.12);
+}
+
+.middle-ring {
+  width: 190px;
+  height: 190px;
+
+  background:
+    rgba(255,255,255,0.06);
+
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.06),
+    0 0 70px rgba(214,199,255,0.15);
+}
+
+.ripple {
+  width: 140px;
+  height: 140px;
+
+  border:
+    1px solid rgba(248,244,239,0.42);
+
+  opacity: 0;
+
+  transform: scale(1);
+}
+
+.breath-stage.active .ripple-one {
+  animation:
+    rippleWave 8s ease-out infinite;
+}
+
+.breath-stage.active .ripple-two {
+  animation:
+    rippleWave 8s ease-out infinite;
+
+  animation-delay: 2s;
+}
+
+.breath-stage.active .ripple-three {
+  animation:
+    rippleWave 8s ease-out infinite;
+
+  animation-delay: 4s;
+}
+
+.breath-circle {
+  width: 140px;
+  height: 140px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #fffaf2 0%,
+      #f2e5d3 52%,
+      #e7d9c7 80%,
+      #d9e8e5 100%
+    );
+
+  box-shadow:
+    0 0 25px rgba(255,245,232,0.35),
+    0 0 80px rgba(120,220,220,0.14);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: #244b57;
+
+  font-size: 1.08rem;
+  font-weight: 700;
+
+  transition:
+    transform 6s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 6s ease;
+
+  z-index: 5;
+
+  gap: 5px;
+}
+
+.breath-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.breath-dots span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #00a7a7,
+      #7f45d8
+    );
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.3);
+}
+
+.lotus-icon {
+  width: 52px;
+  height: 38px;
+
+  fill: none;
+
+  stroke: url(#lotusGradient);
+
+  stroke-width: 5;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  opacity: 1;
+
+  filter:
+    drop-shadow(0 2px 8px rgba(255,255,255,0.28));
+}
+
+.breath-circle.inhale {
+  transform: scale(1.55);
+
+  box-shadow:
+    0 0 70px rgba(255,245,232,0.42),
+    0 0 140px rgba(120,220,220,0.18),
+    0 0 180px rgba(140,100,255,0.14);
+}
+
+.breath-circle.exhale {
+  transform: scale(1);
+
+  transition-duration: 8s;
+
+  box-shadow:
+    0 0 32px rgba(255,245,232,0.28),
+    0 0 70px rgba(120,220,220,0.12);
+}
+
+.timer-text {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  opacity: 1;
+  color: #fffaf5;
+  margin-bottom: 12px;
+  text-shadow:
+    0 2px 12px rgba(0,0,0,0.28);
+}
+
+.completion-message {
+  min-height: 24px;
+  opacity: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fffaf5;
+  text-shadow:
+    0 2px 12px rgba(0,0,0,0.28);
+  transition:
+    opacity 1s ease;
+}
+
+.completion-message.show {
+  opacity: 1;
+}
+
+.controls {
+  margin-top: 16px;
+}
+
+button {
+  border: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  margin: 0 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  background:
+    rgba(255,255,255,0.92);
+  color: #244b57;
+  box-shadow:
+    0 14px 32px rgba(0,0,0,0.22);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.28);
+}
+
+.secondary {
+  background:
+    rgba(255,255,255,0.1);
+  color: white;
+  border:
+    1px solid rgba(255,255,255,0.18);
+}
+
+@keyframes rippleWave {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: scale(2.15);
+    opacity: 0;
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-120vh) scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes auroraMove {
+  from {
+    transform: translate(-3%, -3%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(3%, 3%) rotate(8deg);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    transform: translate(-8%, -8%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(8%, 8%) rotate(20deg);
+  }
+}
+
+</style>
+
+<script>
+
+const circle =
+  document.getElementById("breathCircle");
+
+const breathText =
+  document.getElementById("breathText");
+
+const instruction =
+  document.getElementById("instruction");
+
+const timerText =
+  document.getElementById("timerText");
+
+const startBtn =
+  document.getElementById("startBtn");
+
+const resetBtn =
+  document.getElementById("resetBtn");
+
+const completionMessage =
+  document.getElementById("completionMessage");
+
+const breathStage =
+  document.querySelector(".breath-stage");
+
+let isRunning = false;
+
+let currentTimeout;
+
+let completionTimeout;
+
+function inhale() {
+
+  if (!isRunning) return;
+
+  circle.classList.remove("exhale");
+
+  circle.classList.add("inhale");
+
+  breathText.textContent =
+    "Inhale";
+
+  instruction.textContent =
+    "Breathe in calm, compassion, and presence.";
+
+  timerText.textContent =
+    "Inhale for 4 seconds";
+
+  currentTimeout =
+    setTimeout(exhale, 4000);
+}
+
+function exhale() {
+
+  if (!isRunning) return;
+
+  circle.classList.remove("inhale");
+
+  circle.classList.add("exhale");
+
+  breathText.textContent =
+    "Exhale";
+
+  instruction.textContent =
+    "Release tension and return to centered awareness.";
+
+  timerText.textContent =
+    "Exhale for 6 seconds";
+
+  currentTimeout =
+    setTimeout(inhale, 6000);
+}
+
+startBtn.onclick = function () {
+
+  if (isRunning) return;
+
+  isRunning = true;
+
+  startBtn.textContent =
+    "Breathing...";
+
+  completionMessage.classList.remove("show");
+
+  breathStage.classList.add("active");
+
+  inhale();
+
+  completionTimeout =
+    setTimeout(function () {
+
+      completionMessage.classList.add("show");
+
+    }, 60000);
+};
+
+resetBtn.onclick = function () {
+
+  isRunning = false;
+
+  clearTimeout(currentTimeout);
+
+  clearTimeout(completionTimeout);
+
+  circle.classList.remove(
+    "inhale",
+    "exhale"
+  );
+
+  breathStage.classList.remove("active");
+
+  completionMessage.classList.remove("show");
+
+  breathText.textContent =
+    "Breathe";
+
+  instruction.textContent =
+    "Take a mindful moment to ground yourself before continuing.";
+
+  timerText.textContent =
+    "4 second inhale · 6 second exhale";
+
+  startBtn.textContent =
+    "Begin";
+};
+
+</script>
