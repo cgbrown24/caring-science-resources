@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caring Science Journey</title>
+
+<style>
+:root{
+  --teal:#2D6F76;
+  --soft-teal:#A9D8D4;
+  --lavender:#EDE5F7;
+  --purple:#7A5C92;
+  --gold:#D8B76A;
+  --cream:#FCFAF7;
+  --white:#FFFFFF;
+  --text:#4D5360;
+  --muted:#777080;
+  --shadow:0 18px 45px rgba(80,65,105,.12);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:18px;
+  background:transparent;
+  font-family:"Segoe UI", Arial, sans-serif;
+  color:var(--text);
+}
+
+.journey-wrapper{
+  width:100%;
+  max-width:1150px;
+  margin:0 auto;
+}
+
+.journey-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:34px;
+  background:
+    radial-gradient(circle at top left, rgba(169,216,212,.34), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(237,229,247,.58), transparent 38%),
+    linear-gradient(145deg, #ffffff, #fcfaf7);
+  border:1px solid rgba(122,92,146,.16);
+  box-shadow:var(--shadow);
+  min-height:720px;
+  padding:42px;
+}
+
+.journey-card::before{
+  content:"";
+  position:absolute;
+  width:360px;
+  height:360px;
+  top:-190px;
+  right:-120px;
+  background:radial-gradient(circle, rgba(216,183,106,.16), transparent 72%);
+  pointer-events:none;
+}
+
+.journey-card::after{
+  content:"";
+  position:absolute;
+  width:340px;
+  height:340px;
+  bottom:-190px;
+  left:-130px;
+  background:radial-gradient(circle, rgba(45,111,118,.10), transparent 72%);
+  pointer-events:none;
+}
+
+.content{
+  position:relative;
+  z-index:2;
+}
+
+/* OPENING */
+
+.opening-screen{
+  text-align:center;
+  max-width:820px;
+  margin:76px auto 0;
+  transition:.5s ease;
+}
+
+.opening-screen.hidden{
+  opacity:0;
+  transform:translateY(-10px);
+  pointer-events:none;
+  height:0;
+  overflow:hidden;
+  margin:0 auto;
+}
+
+.lotus-opening{
+  width:86px;
+  margin:0 auto 22px;
+  filter:drop-shadow(0 8px 18px rgba(45,111,118,.16));
+  animation:softPulse 3.4s ease-in-out infinite;
+}
+
+h1{
+  margin:0 0 18px;
+  font-size:clamp(2.3rem, 5vw, 4.2rem);
+  line-height:1.05;
+  color:var(--purple);
+  font-weight:650;
+  letter-spacing:-.02em;
+}
+
+.opening-copy{
+  max-width:760px;
+  margin:0 auto;
+  font-size:1.12rem;
+  line-height:1.8;
+  color:var(--text);
+}
+
+.primary-btn{
+  margin-top:32px;
+  border:none;
+  border-radius:999px;
+  padding:15px 34px;
+  background:var(--purple);
+  color:white;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:.03em;
+  cursor:pointer;
+  box-shadow:0 14px 30px rgba(122,92,146,.22);
+  transition:.25s ease;
+}
+
+.primary-btn:hover{
+  transform:translateY(-2px);
+  background:#684A82;
+}
+
+/* JOURNEY */
+
+.journey-screen{
+  display:none;
+  opacity:0;
+  transition:.6s ease;
+}
+
+.journey-screen.active{
+  display:block;
+  opacity:1;
+}
+
+.journey-header{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.kicker{
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:.78rem;
+  font-weight:800;
+  color:var(--teal);
+  margin-bottom:10px;
+}
+
+.journey-title{
+  font-size:clamp(1.9rem, 4vw, 3.2rem);
+  color:var(--purple);
+  margin:0;
+  line-height:1.1;
+}
+
+.path-area{
+  position:relative;
+  min-height:485px;
+  margin:18px auto 8px;
+}
+
+.path-svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+
+.path-base{
+  fill:none;
+  stroke:rgba(122,92,146,.13);
+  stroke-width:5;
+  stroke-linecap:round;
+}
+
+.path-progress{
+  fill:none;
+  stroke:url(#pathGradient);
+  stroke-width:6;
+  stroke-linecap:round;
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  filter:drop-shadow(0 0 8px rgba(45,111,118,.24));
+}
+
+.path-glow{
+  fill:none;
+  stroke:rgba(216,183,106,.18);
+  stroke-width:16;
+  stroke-linecap:round;
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  filter:blur(8px);
+}
+
+/* SOPHISTICATED LOTUS */
+
+.moving-lotus{
+  position:absolute;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.98), rgba(252,250,247,.84));
+  box-shadow:
+    0 0 18px rgba(216,183,106,.36),
+    0 0 38px rgba(169,216,212,.45),
+    0 0 64px rgba(156,115,214,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.82);
+  transition:
+    opacity .5s ease,
+    transform .6s ease,
+    box-shadow .6s ease;
+  z-index:8;
+}
+
+.moving-lotus.active{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.moving-lotus.pause{
+  transform:translate(-50%,-50%) scale(1.12);
+  box-shadow:
+    0 0 24px rgba(216,183,106,.54),
+    0 0 54px rgba(169,216,212,.55),
+    0 0 84px rgba(156,115,214,.25);
+}
+
+.moving-lotus.final-bloom{
+  transform:translate(-50%,-50%) scale(1.22);
+  box-shadow:
+    0 0 30px rgba(216,183,106,.7),
+    0 0 70px rgba(169,216,212,.62),
+    0 0 110px rgba(156,115,214,.34);
+}
+
+.moving-lotus::before,
+.moving-lotus::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:1px solid rgba(216,183,106,.28);
+  opacity:0;
+}
+
+.moving-lotus.pause::before{
+  animation:ripple 1.15s ease-out;
+}
+
+.moving-lotus.pause::after{
+  animation:ripple 1.15s ease-out .25s;
+}
+
+.moving-lotus svg{
+  width:39px;
+  height:28px;
+  animation:lotusFloat 3s ease-in-out infinite;
+}
+
+.stop{
+  position:absolute;
+  width:240px;
+  padding:14px 16px;
+  border-radius:22px;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(122,92,146,.14);
+  box-shadow:0 12px 28px rgba(80,65,105,.10);
+  opacity:.22;
+  transform:translateY(8px) scale(.98);
+  transition:.55s ease;
+}
+
+.stop.revealed{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+.stop.active{
+  border-color:rgba(216,183,106,.58);
+  box-shadow:
+    0 14px 34px rgba(80,65,105,.14),
+    0 0 0 4px rgba(216,183,106,.13);
+}
+
+.stop-number{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--soft-teal), var(--lavender));
+  color:var(--teal);
+  font-weight:800;
+  font-size:.78rem;
+  margin-bottom:7px;
+}
+
+.stop-title{
+  font-weight:800;
+  color:var(--purple);
+  font-size:.98rem;
+  margin-bottom:5px;
+}
+
+.stop-description{
+  font-size:.88rem;
+  line-height:1.5;
+  color:var(--muted);
+}
+
+.stop-1{ left:1%; top:36px; }
+.stop-2{ left:27%; top:2px; }
+.stop-3{ left:54%; top:38px; }
+.stop-4{ right:1%; top:132px; }
+.stop-5{ right:5%; bottom:86px; }
+.stop-6{ left:54%; bottom:20px; }
+.stop-7{ left:27%; bottom:56px; }
+.stop-8{ left:1%; bottom:132px; }
+
+.status-message{
+  text-align:center;
+  min-height:32px;
+  margin-top:12px;
+  font-size:1rem;
+  color:var(--teal);
+  font-weight:700;
+}
+
+.final-panel{
+  display:none;
+  max-width:800px;
+  margin:22px auto 0;
+  padding:22px 26px;
+  border-radius:26px;
+  text-align:center;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.92), rgba(252,250,247,.98));
+  border:1px solid rgba(216,183,106,.30);
+  box-shadow:0 12px 30px rgba(80,65,105,.10);
+  animation:fadeIn .55s ease;
+}
+
+.final-panel.show{
+  display:block;
+}
+
+.final-message{
+  font-size:1.25rem;
+  line-height:1.7;
+  color:var(--purple);
+  font-weight:700;
+  margin:0;
+}
+
+.continue-note{
+  display:none;
+  margin-top:12px;
+  font-size:.95rem;
+  color:var(--muted);
+}
+
+.continue-note.show{
+  display:block;
+}
+
+.continue-btn{
+  margin-top:18px;
+  border:none;
+  border-radius:999px;
+  padding:13px 30px;
+  background:var(--teal);
+  color:white;
+  font-size:.95rem;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 12px 28px rgba(45,111,118,.20);
+  transition:.25s ease;
+}
+
+.continue-btn:hover{
+  transform:translateY(-2px);
+  background:#245F65;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(8px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+@keyframes softPulse{
+  0%,100%{ transform:scale(1); opacity:1; }
+  50%{ transform:scale(1.06); opacity:.88; }
+}
+
+@keyframes lotusFloat{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-2px); }
+}
+
+@keyframes ripple{
+  0%{ transform:scale(.85); opacity:.6; }
+  100%{ transform:scale(1.85); opacity:0; }
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .journey-card{
+    padding:28px 20px;
+    min-height:auto;
+  }
+
+  .path-area{
+    min-height:auto;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:20px;
+  }
+
+  .path-svg,
+  .moving-lotus{
+    display:none;
+  }
+
+  .stop{
+    position:relative;
+    left:auto;
+    right:auto;
+    top:auto;
+    bottom:auto;
+    width:100%;
+    opacity:.28;
+  }
+
+  .stop.revealed{
+    opacity:1;
+  }
+
+  .status-message{
+    margin-top:16px;
+  }
+
+}
+
+@media(max-width:600px){
+
+  body{
+    padding:12px;
+  }
+
+  .journey-card{
+    border-radius:26px;
+    padding:24px 16px;
+  }
+
+  .opening-screen{
+    margin-top:26px;
+  }
+
+  .opening-copy{
+    font-size:1rem;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="journey-wrapper">
+
+  <div class="journey-card">
+
+    <div class="content">
+
+      <section class="opening-screen" id="openingScreen">
+
+        <svg class="lotus-opening" viewBox="0 0 120 80" aria-hidden="true">
+          <path d="M60 62C52 52 50 39 60 20C70 39 68 52 60 62Z" fill="none" stroke="#2D6F76" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M46 62C34 55 28 43 34 28C48 36 55 48 46 62Z" fill="none" stroke="#7A5C92" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M74 62C86 55 92 43 86 28C72 36 65 48 74 62Z" fill="none" stroke="#7A5C92" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M32 64C22 62 14 54 12 44C28 45 40 52 50 65" fill="none" stroke="#9C73D6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M88 64C98 62 106 54 108 44C92 45 80 52 70 65" fill="none" stroke="#9C73D6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M28 68C44 76 76 76 92 68" fill="none" stroke="#D8B76A" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+
+        <h1>Begin Your Caring Science Journey</h1>
+
+        <p class="opening-copy">
+          Throughout this orientation, you will explore the foundations of Caring Science, pause for reflection, discover practical applications, and identify meaningful ways to bring caring into everyday interactions.
+        </p>
+
+        <button class="primary-btn" id="beginBtn">
+          Begin the Journey
+        </button>
+
+      </section>
+
+      <section class="journey-screen" id="journeyScreen">
+
+        <div class="journey-header">
+          <div class="kicker">Learning Journey</div>
+          <h2 class="journey-title">Your Path Through Caring Science</h2>
+        </div>
+
+        <div class="path-area" id="pathArea">
+
+          <svg class="path-svg" id="pathSvg" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2D6F76"/>
+                <stop offset="45%" stop-color="#9C73D6"/>
+                <stop offset="100%" stop-color="#D8B76A"/>
+              </linearGradient>
+            </defs>
+
+            <path
+              class="path-base"
+              id="journeyPathBase"
+              d="M90,100 C220,20 360,20 500,90 C670,175 850,90 925,190 C1000,290 820,405 640,365 C500,335 410,470 260,405 C110,340 75,260 130,195"
+            />
+
+            <path
+              class="path-glow"
+              id="pathGlow"
+              d="M90,100 C220,20 360,20 500,90 C670,175 850,90 925,190 C1000,290 820,405 640,365 C500,335 410,470 260,405 C110,340 75,260 130,195"
+            />
+
+            <path
+              class="path-progress"
+              id="pathProgress"
+              d="M90,100 C220,20 360,20 500,90 C670,175 850,90 925,190 C1000,290 820,405 640,365 C500,335 410,470 260,405 C110,340 75,260 130,195"
+            />
+          </svg>
+
+          <div class="moving-lotus" id="movingLotus">
+            <svg viewBox="0 0 120 80" aria-hidden="true">
+              <path d="M60 62C52 52 50 39 60 20C70 39 68 52 60 62Z" fill="none" stroke="#2D6F76" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M46 62C34 55 28 43 34 28C48 36 55 48 46 62Z" fill="none" stroke="#7A5C92" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M74 62C86 55 92 43 86 28C72 36 65 48 74 62Z" fill="none" stroke="#9C73D6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M28 68C44 76 76 76 92 68" fill="none" stroke="#D8B76A" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="stop stop-1" data-step="0">
+            <div class="stop-number">1</div>
+            <div class="stop-title">🌱 Preparing for the Journey</div>
+            <div class="stop-description">Pause, reflect, and prepare to explore Caring Science with openness and intention.</div>
+          </div>
+
+          <div class="stop stop-2" data-step="1">
+            <div class="stop-number">2</div>
+            <div class="stop-title">🌿 Why Caring Science?</div>
+            <div class="stop-description">Discover why caring matters and how it shapes learning, leadership, and connection.</div>
+          </div>
+
+          <div class="stop stop-3" data-step="2">
+            <div class="stop-number">3</div>
+            <div class="stop-title">🪷 What is Human Caring Science?</div>
+            <div class="stop-description">Explore the foundations of Jean Watson’s Human Caring Science and its guiding principles.</div>
+          </div>
+
+          <div class="stop stop-4" data-step="3">
+            <div class="stop-number">4</div>
+            <div class="stop-title">✨ Living the 10 Caritas Processes®</div>
+            <div class="stop-description">Learn about the practices that support authentic presence, connection, and caring interactions.</div>
+          </div>
+
+          <div class="stop stop-5" data-step="4">
+            <div class="stop-number">5</div>
+            <div class="stop-title">💛 Why This Matters to You</div>
+            <div class="stop-description">Consider how Caring Science connects to your experiences, values, and professional purpose.</div>
+          </div>
+
+          <div class="stop stop-6" data-step="5">
+            <div class="stop-number">6</div>
+            <div class="stop-title">🌸 A Note of Permission</div>
+            <div class="stop-description">Approach this journey with openness, self-compassion, reflection, and authenticity.</div>
+          </div>
+
+          <div class="stop stop-7" data-step="6">
+            <div class="stop-number">7</div>
+            <div class="stop-title">🤝 Applying to Work</div>
+            <div class="stop-description">Explore practical ways to bring Caring Science principles into everyday workplace interactions.</div>
+          </div>
+
+          <div class="stop stop-8" data-step="7">
+            <div class="stop-number">8</div>
+            <div class="stop-title">🌟 Integration &amp; Commitment</div>
+            <div class="stop-description">Reflect on your experience and identify how you will integrate Caring Science into your work.</div>
+          </div>
+
+        </div>
+
+        <div class="status-message" id="statusMessage">
+          Your journey is beginning...
+        </div>
+
+        <div class="final-panel" id="finalPanel">
+          <p class="final-message">
+            Every caring interaction creates a ripple that extends beyond ourselves.
+          </p>
+
+          <button class="continue-btn" id="continueBtn">
+            Continue
+          </button>
+
+          <div class="continue-note" id="continueNote">
+            You may now continue to the next part of the course.
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const beginBtn = document.getElementById("beginBtn");
+const openingScreen = document.getElementById("openingScreen");
+const journeyScreen = document.getElementById("journeyScreen");
+const movingLotus = document.getElementById("movingLotus");
+const pathArea = document.getElementById("pathArea");
+const pathSvg = document.getElementById("pathSvg");
+const pathBase = document.getElementById("journeyPathBase");
+const pathProgress = document.getElementById("pathProgress");
+const pathGlow = document.getElementById("pathGlow");
+const stops = document.querySelectorAll(".stop");
+const statusMessage = document.getElementById("statusMessage");
+const finalPanel = document.getElementById("finalPanel");
+const continueBtn = document.getElementById("continueBtn");
+const continueNote = document.getElementById("continueNote");
+
+const stopProgress = [0, .145, .285, .425, .565, .705, .845, 1];
+
+const statusText = [
+  "Prepare your mind and heart for the journey ahead.",
+  "Begin by exploring why Caring Science matters.",
+  "Move into the foundations of Human Caring Science.",
+  "Explore the 10 Caritas Processes® as caring practices.",
+  "Consider why this work matters to you personally.",
+  "Pause and receive permission to approach this journey with compassion.",
+  "Apply Caring Science principles to workplace interactions.",
+  "Integrate your learning and commit to caring practice."
+];
+
+let pathLength = 0;
+let isAnimating = false;
+
+function setupPath(){
+  pathLength = pathBase.getTotalLength();
+
+  pathProgress.style.strokeDasharray = pathLength;
+  pathProgress.style.strokeDashoffset = pathLength;
+
+  pathGlow.style.strokeDasharray = pathLength;
+  pathGlow.style.strokeDashoffset = pathLength;
+}
+
+function placeLotus(progress){
+  const point = pathBase.getPointAtLength(pathLength * progress);
+  const svgRect = pathSvg.getBoundingClientRect();
+  const areaRect = pathArea.getBoundingClientRect();
+
+  const x = (point.x / 1000) * svgRect.width;
+  const y = (point.y / 500) * svgRect.height;
+
+  movingLotus.style.left = x + "px";
+  movingLotus.style.top = y + "px";
+}
+
+function animateAlongPath(startProgress, endProgress, duration, callback){
+  const startTime = performance.now();
+
+  function animate(now){
+    const elapsed = now - startTime;
+    const rawProgress = Math.min(elapsed / duration, 1);
+
+    const easedProgress =
+      rawProgress < .5
+        ? 2 * rawProgress * rawProgress
+        : 1 - Math.pow(-2 * rawProgress + 2, 2) / 2;
+
+    const current =
+      startProgress + (endProgress - startProgress) * easedProgress;
+
+    placeLotus(current);
+
+    pathProgress.style.strokeDashoffset =
+      pathLength - (pathLength * current);
+
+    pathGlow.style.strokeDashoffset =
+      pathLength - (pathLength * current);
+
+    if(rawProgress < 1){
+      requestAnimationFrame(animate);
+    } else {
+      callback();
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function revealStop(index){
+  stops.forEach(stop => stop.classList.remove("active"));
+
+  stops[index].classList.add("revealed");
+  stops[index].classList.add("active");
+
+  statusMessage.textContent = statusText[index];
+
+  movingLotus.classList.add("pause");
+
+  setTimeout(() => {
+    movingLotus.classList.remove("pause");
+  }, 900);
+}
+
+function startJourney(){
+  if(isAnimating) return;
+  isAnimating = true;
+
+  setupPath();
+
+  openingScreen.classList.add("hidden");
+
+  setTimeout(() => {
+    journeyScreen.classList.add("active");
+    movingLotus.classList.add("active");
+
+    placeLotus(0);
+    revealStop(0);
+
+    runStep(1);
+  }, 500);
+}
+
+function runStep(index){
+  if(index >= stopProgress.length){
+    movingLotus.classList.add("final-bloom");
+    finalPanel.classList.add("show");
+    statusMessage.textContent = "Your Caring Science journey is ready to begin.";
+    return;
+  }
+
+  setTimeout(() => {
+    animateAlongPath(
+      stopProgress[index - 1],
+      stopProgress[index],
+      1450,
+      () => {
+        revealStop(index);
+        runStep(index + 1);
+      }
+    );
+  }, 850);
+}
+
+beginBtn.addEventListener("click", startJourney);
+
+continueBtn.addEventListener("click", () => {
+  continueNote.classList.add("show");
+});
+
+window.addEventListener("resize", () => {
+  if(pathLength > 0){
+    const activeIndex = [...stops].findIndex(stop => stop.classList.contains("active"));
+    const safeIndex = activeIndex >= 0 ? activeIndex : 0;
+    placeLotus(stopProgress[safeIndex]);
+  }
+});
+</script>
+
+</body>
+</html>
