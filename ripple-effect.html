@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Ripple Effect of Caring</title>
+
+<style>
+:root{
+  --cream:#FCFAF7;
+  --ivory:#FFFDF8;
+  --soft-blue:#DDEFF7;
+  --soft-teal:#A9D8D4;
+  --teal:#2D6F76;
+  --lavender:#EDE5F7;
+  --purple:#7A5C92;
+  --soft-pink:#F7DDE8;
+  --gold:#D8B76A;
+  --text:#4D5360;
+  --muted:#746E7C;
+  --shadow:0 18px 45px rgba(80,65,105,.12);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:18px;
+  background:transparent;
+  font-family:"Segoe UI", Arial, sans-serif;
+  color:var(--text);
+}
+
+.ripple-wrapper{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.ripple-card{
+  position:relative;
+  overflow:hidden;
+  min-height:690px;
+  border-radius:34px;
+  padding:42px;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(169,216,212,.45), transparent 32%),
+    radial-gradient(circle at 85% 16%, rgba(237,229,247,.72), transparent 34%),
+    radial-gradient(circle at 18% 86%, rgba(247,221,232,.52), transparent 36%),
+    radial-gradient(circle at 82% 84%, rgba(221,239,247,.62), transparent 34%),
+    linear-gradient(145deg, #ffffff, var(--cream));
+  border:1px solid rgba(122,92,146,.14);
+  box-shadow:var(--shadow);
+}
+
+.ripple-card::before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  top:-210px;
+  right:-135px;
+  background:radial-gradient(circle, rgba(216,183,106,.16), transparent 72%);
+  pointer-events:none;
+}
+
+.ripple-card::after{
+  content:"";
+  position:absolute;
+  width:380px;
+  height:380px;
+  bottom:-210px;
+  left:-130px;
+  background:radial-gradient(circle, rgba(45,111,118,.11), transparent 72%);
+  pointer-events:none;
+}
+
+.content{
+  position:relative;
+  z-index:2;
+}
+
+/* OPENING */
+
+.opening-screen{
+  max-width:820px;
+  margin:70px auto 0;
+  text-align:center;
+  transition:.5s ease;
+}
+
+.opening-screen.hidden{
+  opacity:0;
+  transform:translateY(-10px);
+  height:0;
+  overflow:hidden;
+  pointer-events:none;
+  margin:0 auto;
+}
+
+.lotus-mark{
+  width:82px;
+  margin:0 auto 22px;
+  filter:drop-shadow(0 8px 18px rgba(45,111,118,.16));
+  animation:softPulse 3.5s ease-in-out infinite;
+}
+
+h1{
+  margin:0 0 18px;
+  font-size:clamp(2.25rem, 5vw, 4rem);
+  line-height:1.08;
+  color:var(--purple);
+  font-weight:650;
+  letter-spacing:-.02em;
+}
+
+.intro-text{
+  max-width:760px;
+  margin:0 auto;
+  font-size:1.12rem;
+  line-height:1.85;
+  color:var(--text);
+}
+
+.primary-btn,
+.replay-btn{
+  margin-top:32px;
+  border:none;
+  border-radius:999px;
+  padding:15px 34px;
+  background:var(--purple);
+  color:white;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:.03em;
+  cursor:pointer;
+  box-shadow:0 14px 30px rgba(122,92,146,.22);
+  transition:.25s ease;
+}
+
+.primary-btn:hover,
+.replay-btn:hover{
+  transform:translateY(-2px);
+  background:#684A82;
+}
+
+/* RIPPLE SCREEN */
+
+.ripple-screen{
+  display:none;
+  opacity:0;
+  transition:.6s ease;
+}
+
+.ripple-screen.active{
+  display:block;
+  opacity:1;
+}
+
+.ripple-header{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.kicker{
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:.78rem;
+  font-weight:800;
+  color:var(--teal);
+  margin-bottom:10px;
+}
+
+.ripple-title{
+  margin:0;
+  font-size:clamp(1.9rem, 4vw, 3.1rem);
+  color:var(--purple);
+  line-height:1.12;
+}
+
+.ripple-instruction{
+  max-width:700px;
+  margin:12px auto 0;
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--muted);
+}
+
+.ripple-stage{
+  position:relative;
+  max-width:920px;
+  min-height:410px;
+  margin:18px auto 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.ripple-circle{
+  position:absolute;
+  border-radius:50%;
+  border:2px solid rgba(45,111,118,.12);
+  background:rgba(255,255,255,.12);
+  opacity:0;
+  transform:scale(.86);
+  transition:
+    opacity .9s ease,
+    transform 1.2s ease,
+    border-color .8s ease,
+    box-shadow .8s ease;
+}
+
+.ripple-circle.active{
+  opacity:1;
+  transform:scale(1);
+  border-color:rgba(45,111,118,.26);
+  box-shadow:
+    0 0 22px rgba(169,216,212,.20),
+    inset 0 0 22px rgba(255,255,255,.22);
+}
+
+.ripple-1{ width:140px; height:140px; }
+.ripple-2{ width:210px; height:210px; }
+.ripple-3{ width:280px; height:280px; }
+.ripple-4{ width:350px; height:350px; }
+.ripple-5{ width:420px; height:420px; }
+.ripple-6{ width:490px; height:490px; }
+
+.center-action{
+  position:absolute;
+  width:190px;
+  min-height:120px;
+  border-radius:28px;
+  padding:20px 18px;
+  background:
+    linear-gradient(145deg, rgba(255,253,248,.98), rgba(252,250,247,.96));
+  border:1px solid rgba(122,92,146,.14);
+  box-shadow:
+    0 16px 36px rgba(80,65,105,.12),
+    0 0 0 6px rgba(216,183,106,.09),
+    inset 0 0 0 1px rgba(255,255,255,.7);
+  text-align:center;
+  z-index:5;
+}
+
+.center-symbol{
+  font-size:1.7rem;
+  color:var(--teal);
+  margin-bottom:8px;
+}
+
+.center-text{
+  margin:0;
+  font-size:1rem;
+  line-height:1.45;
+  color:var(--purple);
+  font-weight:750;
+}
+
+.ripple-node{
+  position:absolute;
+  width:195px;
+  padding:15px 16px;
+  border-radius:22px;
+  background:
+    linear-gradient(145deg, rgba(255,253,248,.98), rgba(252,250,247,.96));
+  border:1px solid rgba(122,92,146,.13);
+  box-shadow:
+    0 12px 28px rgba(80,65,105,.10),
+    inset 0 0 0 1px rgba(255,255,255,.65);
+  opacity:0;
+  transform:translateY(8px);
+  transition:.8s ease;
+  z-index:6;
+}
+
+.ripple-node.revealed{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.node-label{
+  display:inline-block;
+  margin-bottom:6px;
+  font-size:.78rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--teal);
+}
+
+.node-text{
+  margin:0;
+  font-size:.92rem;
+  line-height:1.55;
+  color:var(--muted);
+}
+
+.node-1{ left:50%; top:28px; transform:translate(-50%, 8px); }
+.node-1.revealed{ transform:translate(-50%,0); }
+
+.node-2{ right:70px; top:92px; }
+.node-3{ right:38px; bottom:82px; }
+.node-4{ left:50%; bottom:18px; transform:translate(-50%, 8px); }
+.node-4.revealed{ transform:translate(-50%,0); }
+
+.node-5{ left:38px; bottom:82px; }
+.node-6{ left:70px; top:92px; }
+
+.final-panel{
+  display:none;
+  max-width:820px;
+  margin:22px auto 0;
+  padding:22px 26px;
+  border-radius:28px;
+  text-align:center;
+  background:
+    linear-gradient(145deg, rgba(255,253,248,.96), rgba(252,250,247,.98));
+  border:1px solid rgba(216,183,106,.30);
+  box-shadow:
+    0 14px 34px rgba(80,65,105,.10),
+    inset 0 0 0 1px rgba(255,255,255,.66);
+  animation:fadeIn .55s ease;
+}
+
+.final-panel.show{
+  display:block;
+}
+
+.final-message{
+  margin:0 0 8px;
+  font-size:1.28rem;
+  line-height:1.7;
+  color:var(--purple);
+  font-weight:750;
+}
+
+.final-subtext{
+  margin:0;
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--teal);
+  font-weight:700;
+}
+
+.replay-btn{
+  margin-top:18px;
+  background:var(--teal);
+  box-shadow:0 14px 30px rgba(45,111,118,.18);
+}
+
+.replay-btn:hover{
+  background:#245F65;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(8px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+@keyframes softPulse{
+  0%,100%{ transform:scale(1); opacity:1; }
+  50%{ transform:scale(1.06); opacity:.9; }
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+  .ripple-card{
+    min-height:auto;
+    padding:30px 20px;
+  }
+
+  .opening-screen{
+    margin-top:34px;
+  }
+
+  .ripple-stage{
+    min-height:auto;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:22px;
+  }
+
+  .ripple-circle{
+    display:none;
+  }
+
+  .center-action,
+  .ripple-node{
+    position:relative;
+    left:auto;
+    right:auto;
+    top:auto;
+    bottom:auto;
+    width:100%;
+    max-width:620px;
+    transform:none;
+  }
+
+  .node-1,
+  .node-4{
+    transform:none;
+  }
+
+  .node-1.revealed,
+  .node-4.revealed{
+    transform:none;
+  }
+
+  .center-action{
+    margin-bottom:6px;
+  }
+
+  .ripple-node{
+    opacity:.25;
+  }
+
+  .ripple-node.revealed{
+    opacity:1;
+  }
+}
+
+@media(max-width:600px){
+  body{
+    padding:12px;
+  }
+
+  .ripple-card{
+    border-radius:26px;
+    padding:24px 16px;
+  }
+
+  .intro-text,
+  .ripple-instruction{
+    font-size:1rem;
+  }
+
+  .center-action,
+  .ripple-node{
+    padding:16px;
+  }
+
+  .final-message{
+    font-size:1.12rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ripple-wrapper">
+  <div class="ripple-card">
+    <div class="content">
+
+      <section class="opening-screen" id="openingScreen">
+
+        <svg class="lotus-mark" viewBox="0 0 120 80" aria-hidden="true">
+          <path d="M60 62C52 52 50 39 60 20C70 39 68 52 60 62Z" fill="none" stroke="#2D6F76" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M46 62C34 55 28 43 34 28C48 36 55 48 46 62Z" fill="none" stroke="#7A5C92" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M74 62C86 55 92 43 86 28C72 36 65 48 74 62Z" fill="none" stroke="#7A5C92" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M32 64C22 62 14 54 12 44C28 45 40 52 50 65" fill="none" stroke="#9C73D6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M88 64C98 62 106 54 108 44C92 45 80 52 70 65" fill="none" stroke="#9C73D6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M28 68C44 76 76 76 92 68" fill="none" stroke="#D8B76A" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+
+        <h1>The Ripple Effect of Caring</h1>
+
+        <p class="intro-text">
+          A single caring interaction can influence more than the person in front of us. Caring has a ripple effect that can shape relationships, teams, learning environments, and communities.
+        </p>
+
+        <button class="primary-btn" id="startBtn" aria-label="See the ripple effect of caring">
+          See the Ripple
+        </button>
+
+      </section>
+
+      <section class="ripple-screen" id="rippleScreen" aria-live="polite">
+
+        <div class="ripple-header">
+          <div class="kicker">Why Caring Science Matters</div>
+          <h2 class="ripple-title">Caring Moves Outward</h2>
+          <p class="ripple-instruction">
+            Watch how one moment of caring can expand outward and shape the experiences of others.
+          </p>
+        </div>
+
+        <div class="ripple-stage">
+
+          <div class="ripple-circle ripple-1"></div>
+          <div class="ripple-circle ripple-2"></div>
+          <div class="ripple-circle ripple-3"></div>
+          <div class="ripple-circle ripple-4"></div>
+          <div class="ripple-circle ripple-5"></div>
+          <div class="ripple-circle ripple-6"></div>
+
+          <div class="center-action">
+            <div class="center-symbol">✦</div>
+            <p class="center-text">A leader pauses to truly listen.</p>
+          </div>
+
+          <div class="ripple-node node-1">
+            <span class="node-label">Leader</span>
+            <p class="node-text">Begins with presence and intentionality.</p>
+          </div>
+
+          <div class="ripple-node node-2">
+            <span class="node-label">Faculty</span>
+            <p class="node-text">Feels seen, supported, and respected.</p>
+          </div>
+
+          <div class="ripple-node node-3">
+            <span class="node-label">Student</span>
+            <p class="node-text">Experiences a more caring and connected learning environment.</p>
+          </div>
+
+          <div class="ripple-node node-4">
+            <span class="node-label">Patient</span>
+            <p class="node-text">Receives care shaped by compassion, dignity, and human connection.</p>
+          </div>
+
+          <div class="ripple-node node-5">
+            <span class="node-label">Family</span>
+            <p class="node-text">Feels the impact of compassionate care and support.</p>
+          </div>
+
+          <div class="ripple-node node-6">
+            <span class="node-label">Community</span>
+            <p class="node-text">Benefits from a culture where caring is practiced and shared.</p>
+          </div>
+
+        </div>
+
+        <div class="final-panel" id="finalPanel">
+          <p class="final-message">
+            Every caring interaction creates a ripple that extends beyond ourselves.
+          </p>
+          <p class="final-subtext">
+            Caring Science reminds us that how we show up matters.
+          </p>
+
+          <button class="replay-btn" id="replayBtn" aria-label="Replay the ripple animation">
+            Replay Ripple
+          </button>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const startBtn = document.getElementById("startBtn");
+const replayBtn = document.getElementById("replayBtn");
+const openingScreen = document.getElementById("openingScreen");
+const rippleScreen = document.getElementById("rippleScreen");
+const circles = document.querySelectorAll(".ripple-circle");
+const nodes = document.querySelectorAll(".ripple-node");
+const finalPanel = document.getElementById("finalPanel");
+
+let timers = [];
+
+function clearTimers(){
+  timers.forEach(timer => clearTimeout(timer));
+  timers = [];
+}
+
+function resetRipple(){
+  clearTimers();
+
+  circles.forEach(circle => {
+    circle.classList.remove("active");
+  });
+
+  nodes.forEach(node => {
+    node.classList.remove("revealed");
+  });
+
+  finalPanel.classList.remove("show");
+}
+
+function runRipple(){
+  resetRipple();
+
+  circles.forEach((circle, index) => {
+    timers.push(setTimeout(() => {
+      circle.classList.add("active");
+    }, 650 + index * 850));
+  });
+
+  nodes.forEach((node, index) => {
+    timers.push(setTimeout(() => {
+      node.classList.add("revealed");
+    }, 1050 + index * 900));
+  });
+
+  timers.push(setTimeout(() => {
+    finalPanel.classList.add("show");
+  }, 7200));
+}
+
+startBtn.addEventListener("click", () => {
+  openingScreen.classList.add("hidden");
+
+  setTimeout(() => {
+    rippleScreen.classList.add("active");
+    runRipple();
+  }, 500);
+});
+
+replayBtn.addEventListener("click", () => {
+  runRipple();
+});
+</script>
+
+</body>
+</html>
