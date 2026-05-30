@@ -8,12 +8,14 @@
 <style>
 :root{
   --teal:#2D6F76;
+  --deep-teal:#174F57;
   --soft-teal:#A9D8D4;
+  --sage:#C9DDD2;
   --lavender:#EDE5F7;
   --purple:#7A5C92;
   --gold:#D8B76A;
   --cream:#FCFAF7;
-  --white:#FFFFFF;
+  --ivory:#FFFDF8;
   --text:#4D5360;
   --muted:#777080;
   --shadow:0 18px 45px rgba(80,65,105,.12);
@@ -42,34 +44,36 @@ body{
   overflow:hidden;
   border-radius:34px;
   background:
-    radial-gradient(circle at top left, rgba(169,216,212,.34), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(237,229,247,.58), transparent 38%),
+    radial-gradient(circle at 12% 8%, rgba(169,216,212,.48), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(237,229,247,.72), transparent 34%),
+    radial-gradient(circle at 22% 88%, rgba(201,221,210,.54), transparent 36%),
+    radial-gradient(circle at 78% 84%, rgba(216,183,106,.14), transparent 34%),
     linear-gradient(145deg, #ffffff, #fcfaf7);
   border:1px solid rgba(122,92,146,.16);
   box-shadow:var(--shadow);
-  min-height:720px;
+  min-height:760px;
   padding:42px;
 }
 
 .journey-card::before{
   content:"";
   position:absolute;
-  width:360px;
-  height:360px;
-  top:-190px;
-  right:-120px;
-  background:radial-gradient(circle, rgba(216,183,106,.16), transparent 72%);
+  width:420px;
+  height:420px;
+  top:-210px;
+  right:-130px;
+  background:radial-gradient(circle, rgba(45,111,118,.12), transparent 72%);
   pointer-events:none;
 }
 
 .journey-card::after{
   content:"";
   position:absolute;
-  width:340px;
-  height:340px;
-  bottom:-190px;
-  left:-130px;
-  background:radial-gradient(circle, rgba(45,111,118,.10), transparent 72%);
+  width:380px;
+  height:380px;
+  bottom:-210px;
+  left:-140px;
+  background:radial-gradient(circle, rgba(122,92,146,.12), transparent 72%);
   pointer-events:none;
 }
 
@@ -99,7 +103,7 @@ body{
 .lotus-opening{
   width:86px;
   margin:0 auto 22px;
-  filter:drop-shadow(0 8px 18px rgba(45,111,118,.16));
+  filter:drop-shadow(0 8px 18px rgba(45,111,118,.18));
   animation:softPulse 3.4s ease-in-out infinite;
 }
 
@@ -155,7 +159,7 @@ h1{
 
 .journey-header{
   text-align:center;
-  margin-bottom:18px;
+  margin-bottom:26px;
 }
 
 .kicker{
@@ -176,8 +180,8 @@ h1{
 
 .path-area{
   position:relative;
-  min-height:485px;
-  margin:18px auto 8px;
+  min-height:720px;
+  margin:20px auto 8px;
 }
 
 .path-svg{
@@ -186,6 +190,7 @@ h1{
   width:100%;
   height:100%;
   overflow:visible;
+  z-index:1;
 }
 
 .path-base{
@@ -207,7 +212,7 @@ h1{
 
 .path-glow{
   fill:none;
-  stroke:rgba(216,183,106,.18);
+  stroke:rgba(216,183,106,.16);
   stroke-width:16;
   stroke-linecap:round;
   stroke-dasharray:1;
@@ -219,15 +224,15 @@ h1{
 
 .moving-lotus{
   position:absolute;
-  width:64px;
-  height:64px;
+  width:66px;
+  height:66px;
   border-radius:50%;
   background:
-    radial-gradient(circle, rgba(255,255,255,.98), rgba(252,250,247,.84));
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,.98), rgba(252,250,247,.86));
   box-shadow:
-    0 0 18px rgba(216,183,106,.36),
-    0 0 38px rgba(169,216,212,.45),
-    0 0 64px rgba(156,115,214,.18);
+    0 0 18px rgba(216,183,106,.38),
+    0 0 42px rgba(169,216,212,.50),
+    0 0 72px rgba(122,92,146,.22);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -237,7 +242,7 @@ h1{
     opacity .5s ease,
     transform .6s ease,
     box-shadow .6s ease;
-  z-index:8;
+  z-index:3;
 }
 
 .moving-lotus.active{
@@ -248,17 +253,17 @@ h1{
 .moving-lotus.pause{
   transform:translate(-50%,-50%) scale(1.12);
   box-shadow:
-    0 0 24px rgba(216,183,106,.54),
-    0 0 54px rgba(169,216,212,.55),
-    0 0 84px rgba(156,115,214,.25);
+    0 0 26px rgba(216,183,106,.62),
+    0 0 58px rgba(169,216,212,.62),
+    0 0 92px rgba(122,92,146,.32);
 }
 
 .moving-lotus.final-bloom{
-  transform:translate(-50%,-50%) scale(1.22);
+  transform:translate(-50%,-50%) scale(1.24);
   box-shadow:
-    0 0 30px rgba(216,183,106,.7),
-    0 0 70px rgba(169,216,212,.62),
-    0 0 110px rgba(156,115,214,.34);
+    0 0 34px rgba(216,183,106,.76),
+    0 0 76px rgba(169,216,212,.68),
+    0 0 120px rgba(122,92,146,.38);
 }
 
 .moving-lotus::before,
@@ -272,30 +277,40 @@ h1{
 }
 
 .moving-lotus.pause::before{
-  animation:ripple 1.15s ease-out;
+  animation:ripple 1.35s ease-out;
 }
 
 .moving-lotus.pause::after{
-  animation:ripple 1.15s ease-out .25s;
+  animation:ripple 1.35s ease-out .3s;
 }
 
 .moving-lotus svg{
-  width:39px;
-  height:28px;
+  width:40px;
+  height:29px;
   animation:lotusFloat 3s ease-in-out infinite;
 }
 
+/* STOPS */
+
 .stop{
   position:absolute;
-  width:240px;
-  padding:14px 16px;
-  border-radius:22px;
-  background:rgba(255,255,255,.94);
-  border:1px solid rgba(122,92,146,.14);
-  box-shadow:0 12px 28px rgba(80,65,105,.10);
+  width:310px;
+  padding:18px 20px;
+  border-radius:24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,253,248,.98),
+      rgba(252,250,247,.95)
+    );
+  border:1px solid rgba(122,92,146,.13);
+  box-shadow:
+    0 14px 30px rgba(80,65,105,.10),
+    inset 0 0 0 1px rgba(255,255,255,.58);
   opacity:.22;
   transform:translateY(8px) scale(.98);
-  transition:.55s ease;
+  transition:.65s ease;
+  z-index:5;
 }
 
 .stop.revealed{
@@ -306,14 +321,15 @@ h1{
 .stop.active{
   border-color:rgba(216,183,106,.58);
   box-shadow:
-    0 14px 34px rgba(80,65,105,.14),
-    0 0 0 4px rgba(216,183,106,.13);
+    0 16px 36px rgba(80,65,105,.14),
+    0 0 0 4px rgba(216,183,106,.12),
+    inset 0 0 0 1px rgba(255,255,255,.72);
 }
 
 .stop-number{
   display:inline-flex;
-  width:26px;
-  height:26px;
+  width:28px;
+  height:28px;
   align-items:center;
   justify-content:center;
   border-radius:50%;
@@ -321,35 +337,37 @@ h1{
   color:var(--teal);
   font-weight:800;
   font-size:.78rem;
-  margin-bottom:7px;
+  margin-bottom:8px;
 }
 
 .stop-title{
   font-weight:800;
   color:var(--purple);
-  font-size:.98rem;
-  margin-bottom:5px;
+  font-size:1.02rem;
+  margin-bottom:6px;
 }
 
 .stop-description{
-  font-size:.88rem;
-  line-height:1.5;
+  font-size:.92rem;
+  line-height:1.55;
   color:var(--muted);
 }
 
-.stop-1{ left:1%; top:36px; }
-.stop-2{ left:27%; top:2px; }
-.stop-3{ left:54%; top:38px; }
-.stop-4{ right:1%; top:132px; }
-.stop-5{ right:5%; bottom:86px; }
-.stop-6{ left:54%; bottom:20px; }
-.stop-7{ left:27%; bottom:56px; }
-.stop-8{ left:1%; bottom:132px; }
+/* Cards stagger left and right. Lotus path runs down the center. */
+
+.stop-1{ left:2%; top:16px; }
+.stop-2{ right:2%; top:96px; }
+.stop-3{ left:2%; top:176px; }
+.stop-4{ right:2%; top:256px; }
+.stop-5{ left:2%; top:336px; }
+.stop-6{ right:2%; top:416px; }
+.stop-7{ left:2%; top:496px; }
+.stop-8{ right:2%; top:576px; }
 
 .status-message{
   text-align:center;
-  min-height:32px;
-  margin-top:12px;
+  min-height:34px;
+  margin-top:18px;
   font-size:1rem;
   color:var(--teal);
   font-weight:700;
@@ -357,15 +375,17 @@ h1{
 
 .final-panel{
   display:none;
-  max-width:800px;
-  margin:22px auto 0;
-  padding:22px 26px;
-  border-radius:26px;
+  max-width:820px;
+  margin:24px auto 0;
+  padding:24px 28px;
+  border-radius:28px;
   text-align:center;
   background:
-    linear-gradient(145deg, rgba(255,255,255,.92), rgba(252,250,247,.98));
+    linear-gradient(145deg, rgba(255,253,248,.96), rgba(252,250,247,.98));
   border:1px solid rgba(216,183,106,.30);
-  box-shadow:0 12px 30px rgba(80,65,105,.10);
+  box-shadow:
+    0 14px 34px rgba(80,65,105,.10),
+    inset 0 0 0 1px rgba(255,255,255,.66);
   animation:fadeIn .55s ease;
 }
 
@@ -374,41 +394,19 @@ h1{
 }
 
 .final-message{
-  font-size:1.25rem;
-  line-height:1.7;
+  font-size:1.26rem;
+  line-height:1.75;
   color:var(--purple);
   font-weight:700;
+  margin:0 0 8px;
+}
+
+.final-ready{
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--teal);
+  font-weight:700;
   margin:0;
-}
-
-.continue-note{
-  display:none;
-  margin-top:12px;
-  font-size:.95rem;
-  color:var(--muted);
-}
-
-.continue-note.show{
-  display:block;
-}
-
-.continue-btn{
-  margin-top:18px;
-  border:none;
-  border-radius:999px;
-  padding:13px 30px;
-  background:var(--teal);
-  color:white;
-  font-size:.95rem;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 12px 28px rgba(45,111,118,.20);
-  transition:.25s ease;
-}
-
-.continue-btn:hover{
-  transform:translateY(-2px);
-  background:#245F65;
 }
 
 @keyframes fadeIn{
@@ -418,7 +416,7 @@ h1{
 
 @keyframes softPulse{
   0%,100%{ transform:scale(1); opacity:1; }
-  50%{ transform:scale(1.06); opacity:.88; }
+  50%{ transform:scale(1.06); opacity:.9; }
 }
 
 @keyframes lotusFloat{
@@ -427,8 +425,8 @@ h1{
 }
 
 @keyframes ripple{
-  0%{ transform:scale(.85); opacity:.6; }
-  100%{ transform:scale(1.85); opacity:0; }
+  0%{ transform:scale(.85); opacity:.62; }
+  100%{ transform:scale(1.9); opacity:0; }
 }
 
 /* MOBILE */
@@ -536,11 +534,12 @@ h1{
 
         <div class="path-area" id="pathArea">
 
-          <svg class="path-svg" id="pathSvg" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+          <svg class="path-svg" id="pathSvg" viewBox="0 0 1000 760" preserveAspectRatio="none" aria-hidden="true">
             <defs>
-              <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="pathGradient" x1="50%" y1="0%" x2="50%" y2="100%">
                 <stop offset="0%" stop-color="#2D6F76"/>
-                <stop offset="45%" stop-color="#9C73D6"/>
+                <stop offset="44%" stop-color="#9C73D6"/>
+                <stop offset="72%" stop-color="#8FBFA5"/>
                 <stop offset="100%" stop-color="#D8B76A"/>
               </linearGradient>
             </defs>
@@ -548,19 +547,19 @@ h1{
             <path
               class="path-base"
               id="journeyPathBase"
-              d="M90,100 C220,20 360,20 500,90 C670,175 850,90 925,190 C1000,290 820,405 640,365 C500,335 410,470 260,405 C110,340 75,260 130,195"
+              d="M500,55 C455,120 545,180 500,245 C455,310 545,370 500,435 C455,500 545,560 500,625 C482,655 490,685 500,715"
             />
 
             <path
               class="path-glow"
               id="pathGlow"
-              d="M90,100 C220,20 360,20 500,90 C670,175 850,90 925,190 C1000,290 820,405 640,365 C500,335 410,470 260,405 C110,340 75,260 130,195"
+              d="M500,55 C455,120 545,180 500,245 C455,310 545,370 500,435 C455,500 545,560 500,625 C482,655 490,685 500,715"
             />
 
             <path
               class="path-progress"
               id="pathProgress"
-              d="M90,100 C220,20 360,20 500,90 C670,175 850,90 925,190 C1000,290 820,405 640,365 C500,335 410,470 260,405 C110,340 75,260 130,195"
+              d="M500,55 C455,120 545,180 500,245 C455,310 545,370 500,435 C455,500 545,560 500,625 C482,655 490,685 500,715"
             />
           </svg>
 
@@ -575,49 +574,49 @@ h1{
 
           <div class="stop stop-1" data-step="0">
             <div class="stop-number">1</div>
-            <div class="stop-title">🌱 Preparing for the Journey</div>
+            <div class="stop-title">Preparing for the Journey</div>
             <div class="stop-description">Pause, reflect, and prepare to explore Caring Science with openness and intention.</div>
           </div>
 
           <div class="stop stop-2" data-step="1">
             <div class="stop-number">2</div>
-            <div class="stop-title">🌿 Why Caring Science?</div>
+            <div class="stop-title">Why Caring Science?</div>
             <div class="stop-description">Discover why caring matters and how it shapes learning, leadership, and connection.</div>
           </div>
 
           <div class="stop stop-3" data-step="2">
             <div class="stop-number">3</div>
-            <div class="stop-title">🪷 What is Human Caring Science?</div>
+            <div class="stop-title">What is Human Caring Science?</div>
             <div class="stop-description">Explore the foundations of Jean Watson’s Human Caring Science and its guiding principles.</div>
           </div>
 
           <div class="stop stop-4" data-step="3">
             <div class="stop-number">4</div>
-            <div class="stop-title">✨ Living the 10 Caritas Processes®</div>
+            <div class="stop-title">Living the 10 Caritas Processes®</div>
             <div class="stop-description">Learn about the practices that support authentic presence, connection, and caring interactions.</div>
           </div>
 
           <div class="stop stop-5" data-step="4">
             <div class="stop-number">5</div>
-            <div class="stop-title">💛 Why This Matters to You</div>
+            <div class="stop-title">Why This Matters to You</div>
             <div class="stop-description">Consider how Caring Science connects to your experiences, values, and professional purpose.</div>
           </div>
 
           <div class="stop stop-6" data-step="5">
             <div class="stop-number">6</div>
-            <div class="stop-title">🌸 A Note of Permission</div>
+            <div class="stop-title">A Note of Permission</div>
             <div class="stop-description">Approach this journey with openness, self-compassion, reflection, and authenticity.</div>
           </div>
 
           <div class="stop stop-7" data-step="6">
             <div class="stop-number">7</div>
-            <div class="stop-title">🤝 Applying to Work</div>
+            <div class="stop-title">Applying to Work</div>
             <div class="stop-description">Explore practical ways to bring Caring Science principles into everyday workplace interactions.</div>
           </div>
 
           <div class="stop stop-8" data-step="7">
             <div class="stop-number">8</div>
-            <div class="stop-title">🌟 Integration &amp; Commitment</div>
+            <div class="stop-title">Integration &amp; Commitment</div>
             <div class="stop-description">Reflect on your experience and identify how you will integrate Caring Science into your work.</div>
           </div>
 
@@ -632,13 +631,9 @@ h1{
             Every caring interaction creates a ripple that extends beyond ourselves.
           </p>
 
-          <button class="continue-btn" id="continueBtn">
-            Continue
-          </button>
-
-          <div class="continue-note" id="continueNote">
-            You may now continue to the next part of the course.
-          </div>
+          <p class="final-ready">
+            Your Caring Science journey is ready to begin.
+          </p>
         </div>
 
       </section>
@@ -662,8 +657,6 @@ const pathGlow = document.getElementById("pathGlow");
 const stops = document.querySelectorAll(".stop");
 const statusMessage = document.getElementById("statusMessage");
 const finalPanel = document.getElementById("finalPanel");
-const continueBtn = document.getElementById("continueBtn");
-const continueNote = document.getElementById("continueNote");
 
 const stopProgress = [0, .145, .285, .425, .565, .705, .845, 1];
 
@@ -694,10 +687,9 @@ function setupPath(){
 function placeLotus(progress){
   const point = pathBase.getPointAtLength(pathLength * progress);
   const svgRect = pathSvg.getBoundingClientRect();
-  const areaRect = pathArea.getBoundingClientRect();
 
   const x = (point.x / 1000) * svgRect.width;
-  const y = (point.y / 500) * svgRect.height;
+  const y = (point.y / 760) * svgRect.height;
 
   movingLotus.style.left = x + "px";
   movingLotus.style.top = y + "px";
@@ -748,7 +740,7 @@ function revealStop(index){
 
   setTimeout(() => {
     movingLotus.classList.remove("pause");
-  }, 900);
+  }, 1400);
 }
 
 function startJourney(){
@@ -773,8 +765,8 @@ function startJourney(){
 function runStep(index){
   if(index >= stopProgress.length){
     movingLotus.classList.add("final-bloom");
+    statusMessage.textContent = "";
     finalPanel.classList.add("show");
-    statusMessage.textContent = "Your Caring Science journey is ready to begin.";
     return;
   }
 
@@ -782,20 +774,16 @@ function runStep(index){
     animateAlongPath(
       stopProgress[index - 1],
       stopProgress[index],
-      1450,
+      3000,
       () => {
         revealStop(index);
         runStep(index + 1);
       }
     );
-  }, 850);
+  }, 4000);
 }
 
 beginBtn.addEventListener("click", startJourney);
-
-continueBtn.addEventListener("click", () => {
-  continueNote.classList.add("show");
-});
 
 window.addEventListener("resize", () => {
   if(pathLength > 0){
