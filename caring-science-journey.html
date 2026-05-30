@@ -44,14 +44,14 @@ body{
   overflow:hidden;
   border-radius:34px;
   background:
-    radial-gradient(circle at 12% 8%, rgba(169,216,212,.48), transparent 32%),
-    radial-gradient(circle at 88% 18%, rgba(237,229,247,.72), transparent 34%),
-    radial-gradient(circle at 22% 88%, rgba(201,221,210,.54), transparent 36%),
-    radial-gradient(circle at 78% 84%, rgba(216,183,106,.14), transparent 34%),
+    radial-gradient(circle at 12% 8%, rgba(169,216,212,.52), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(237,229,247,.78), transparent 34%),
+    radial-gradient(circle at 22% 88%, rgba(201,221,210,.56), transparent 36%),
+    radial-gradient(circle at 78% 84%, rgba(216,183,106,.15), transparent 34%),
     linear-gradient(145deg, #ffffff, #fcfaf7);
   border:1px solid rgba(122,92,146,.16);
   box-shadow:var(--shadow);
-  min-height:760px;
+  min-height:620px;
   padding:42px;
 }
 
@@ -87,7 +87,7 @@ body{
 .opening-screen{
   text-align:center;
   max-width:820px;
-  margin:76px auto 0;
+  margin:56px auto 0;
   transition:.5s ease;
 }
 
@@ -159,7 +159,7 @@ h1{
 
 .journey-header{
   text-align:center;
-  margin-bottom:26px;
+  margin-bottom:30px;
 }
 
 .kicker{
@@ -172,7 +172,7 @@ h1{
 }
 
 .journey-title{
-  font-size:clamp(1.9rem, 4vw, 3.2rem);
+  font-size:clamp(1.9rem, 4vw, 3.1rem);
   color:var(--purple);
   margin:0;
   line-height:1.1;
@@ -180,50 +180,113 @@ h1{
 
 .path-area{
   position:relative;
-  min-height:720px;
-  margin:20px auto 8px;
+  max-width:980px;
+  margin:0 auto;
+  padding:20px 18px 0;
 }
 
-.path-svg{
+.horizontal-path{
+  position:relative;
+  height:120px;
+  margin:8px 0 26px;
+}
+
+.path-line{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  overflow:visible;
-  z-index:1;
+  left:5%;
+  right:5%;
+  top:50%;
+  height:6px;
+  transform:translateY(-50%);
+  border-radius:999px;
+  background:rgba(122,92,146,.14);
+  overflow:hidden;
 }
 
-.path-base{
-  fill:none;
-  stroke:rgba(122,92,146,.13);
-  stroke-width:5;
-  stroke-linecap:round;
+.path-line::before{
+  content:"";
+  position:absolute;
+  inset:-10px 0;
+  background:rgba(216,183,106,.13);
+  filter:blur(10px);
 }
 
 .path-progress{
-  fill:none;
-  stroke:url(#pathGradient);
-  stroke-width:6;
-  stroke-linecap:round;
-  stroke-dasharray:1;
-  stroke-dashoffset:1;
-  filter:drop-shadow(0 0 8px rgba(45,111,118,.24));
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:
+    linear-gradient(
+      90deg,
+      var(--teal),
+      var(--purple),
+      #8FBFA5,
+      var(--gold)
+    );
+  box-shadow:
+    0 0 16px rgba(45,111,118,.28),
+    0 0 28px rgba(216,183,106,.18);
+  transition:width 3s cubic-bezier(.4,0,.2,1);
 }
 
-.path-glow{
-  fill:none;
-  stroke:rgba(216,183,106,.16);
-  stroke-width:16;
-  stroke-linecap:round;
-  stroke-dasharray:1;
-  stroke-dashoffset:1;
-  filter:blur(8px);
+.path-stop{
+  position:absolute;
+  top:50%;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:var(--ivory);
+  border:2px solid rgba(122,92,146,.22);
+  color:var(--teal);
+  font-size:.82rem;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:4;
+  box-shadow:
+    0 8px 18px rgba(80,65,105,.12),
+    inset 0 0 0 1px rgba(255,255,255,.6);
+  transition:.45s ease;
 }
+
+.path-stop.revealed{
+  border-color:rgba(45,111,118,.55);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(169,216,212,.65),
+      rgba(237,229,247,.75)
+    );
+}
+
+.path-stop.active{
+  border-color:rgba(216,183,106,.8);
+  transform:translate(-50%,-50%) scale(1.16);
+  box-shadow:
+    0 0 0 5px rgba(216,183,106,.13),
+    0 12px 26px rgba(80,65,105,.16);
+}
+
+.path-stop:nth-child(1){ left:5%; }
+.path-stop:nth-child(2){ left:17.85%; }
+.path-stop:nth-child(3){ left:30.7%; }
+.path-stop:nth-child(4){ left:43.55%; }
+.path-stop:nth-child(5){ left:56.4%; }
+.path-stop:nth-child(6){ left:69.25%; }
+.path-stop:nth-child(7){ left:82.1%; }
+.path-stop:nth-child(8){ left:95%; }
 
 /* SOPHISTICATED LOTUS */
 
 .moving-lotus{
   position:absolute;
+  top:50%;
+  left:5%;
   width:66px;
   height:66px;
   border-radius:50%;
@@ -239,10 +302,11 @@ h1{
   opacity:0;
   transform:translate(-50%,-50%) scale(.82);
   transition:
+    left 3s cubic-bezier(.4,0,.2,1),
     opacity .5s ease,
     transform .6s ease,
     box-shadow .6s ease;
-  z-index:3;
+  z-index:6;
 }
 
 .moving-lotus.active{
@@ -290,93 +354,74 @@ h1{
   animation:lotusFloat 3s ease-in-out infinite;
 }
 
-/* STOPS */
+/* ACTIVE CARD */
 
-.stop{
-  position:absolute;
-  width:310px;
-  padding:18px 20px;
-  border-radius:24px;
+.stop-card{
+  max-width:760px;
+  min-height:210px;
+  margin:0 auto;
+  padding:30px 34px;
+  border-radius:30px;
   background:
     linear-gradient(
       145deg,
       rgba(255,253,248,.98),
-      rgba(252,250,247,.95)
+      rgba(252,250,247,.96)
     );
   border:1px solid rgba(122,92,146,.13);
   box-shadow:
-    0 14px 30px rgba(80,65,105,.10),
-    inset 0 0 0 1px rgba(255,255,255,.58);
-  opacity:.22;
-  transform:translateY(8px) scale(.98);
-  transition:.65s ease;
-  z-index:5;
+    0 16px 38px rgba(80,65,105,.12),
+    inset 0 0 0 1px rgba(255,255,255,.68);
+  text-align:center;
+  opacity:0;
+  transform:translateY(10px);
+  transition:.6s ease;
 }
 
-.stop.revealed{
+.stop-card.show{
   opacity:1;
-  transform:translateY(0) scale(1);
+  transform:translateY(0);
 }
 
-.stop.active{
-  border-color:rgba(216,183,106,.58);
-  box-shadow:
-    0 16px 36px rgba(80,65,105,.14),
-    0 0 0 4px rgba(216,183,106,.12),
-    inset 0 0 0 1px rgba(255,255,255,.72);
-}
-
-.stop-number{
+.stop-label{
   display:inline-flex;
-  width:28px;
-  height:28px;
   align-items:center;
   justify-content:center;
+  width:34px;
+  height:34px;
   border-radius:50%;
-  background:linear-gradient(135deg, var(--soft-teal), var(--lavender));
+  margin-bottom:14px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(169,216,212,.75),
+      rgba(237,229,247,.85)
+    );
   color:var(--teal);
+  font-size:.86rem;
   font-weight:800;
-  font-size:.78rem;
-  margin-bottom:8px;
 }
 
 .stop-title{
-  font-weight:800;
+  margin:0 0 12px;
   color:var(--purple);
-  font-size:1.02rem;
-  margin-bottom:6px;
+  font-size:1.65rem;
+  line-height:1.2;
+  font-weight:750;
 }
 
 .stop-description{
-  font-size:.92rem;
-  line-height:1.55;
+  max-width:620px;
+  margin:0 auto;
+  font-size:1.05rem;
+  line-height:1.75;
   color:var(--muted);
-}
-
-/* Cards stagger left and right. Lotus path runs down the center. */
-
-.stop-1{ left:2%; top:16px; }
-.stop-2{ right:2%; top:96px; }
-.stop-3{ left:2%; top:176px; }
-.stop-4{ right:2%; top:256px; }
-.stop-5{ left:2%; top:336px; }
-.stop-6{ right:2%; top:416px; }
-.stop-7{ left:2%; top:496px; }
-.stop-8{ right:2%; top:576px; }
-
-.status-message{
-  text-align:center;
-  min-height:34px;
-  margin-top:18px;
-  font-size:1rem;
-  color:var(--teal);
-  font-weight:700;
 }
 
 .final-panel{
   display:none;
   max-width:820px;
-  margin:24px auto 0;
+  margin:28px auto 0;
   padding:24px 28px;
   border-radius:28px;
   text-align:center;
@@ -394,7 +439,7 @@ h1{
 }
 
 .final-message{
-  font-size:1.26rem;
+  font-size:1.28rem;
   line-height:1.75;
   color:var(--purple);
   font-weight:700;
@@ -434,39 +479,40 @@ h1{
 @media(max-width:900px){
 
   .journey-card{
-    padding:28px 20px;
+    padding:30px 20px;
     min-height:auto;
   }
 
-  .path-area{
-    min-height:auto;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    margin-top:20px;
+  .horizontal-path{
+    height:105px;
   }
 
-  .path-svg,
   .moving-lotus{
-    display:none;
+    width:58px;
+    height:58px;
   }
 
-  .stop{
-    position:relative;
-    left:auto;
-    right:auto;
-    top:auto;
-    bottom:auto;
-    width:100%;
-    opacity:.28;
+  .moving-lotus svg{
+    width:35px;
   }
 
-  .stop.revealed{
-    opacity:1;
+  .path-stop{
+    width:28px;
+    height:28px;
+    font-size:.74rem;
   }
 
-  .status-message{
-    margin-top:16px;
+  .stop-card{
+    min-height:230px;
+    padding:26px 22px;
+  }
+
+  .stop-title{
+    font-size:1.42rem;
+  }
+
+  .stop-description{
+    font-size:1rem;
   }
 
 }
@@ -488,6 +534,42 @@ h1{
 
   .opening-copy{
     font-size:1rem;
+  }
+
+  .journey-header{
+    margin-bottom:20px;
+  }
+
+  .horizontal-path{
+    height:95px;
+  }
+
+  .path-line{
+    left:7%;
+    right:7%;
+  }
+
+  .path-stop:nth-child(1){ left:7%; }
+  .path-stop:nth-child(2){ left:19.3%; }
+  .path-stop:nth-child(3){ left:31.6%; }
+  .path-stop:nth-child(4){ left:43.9%; }
+  .path-stop:nth-child(5){ left:56.2%; }
+  .path-stop:nth-child(6){ left:68.5%; }
+  .path-stop:nth-child(7){ left:80.8%; }
+  .path-stop:nth-child(8){ left:93%; }
+
+  .moving-lotus{
+    width:52px;
+    height:52px;
+  }
+
+  .moving-lotus svg{
+    width:32px;
+  }
+
+  .stop-card{
+    min-height:260px;
+    padding:24px 18px;
   }
 
 }
@@ -532,98 +614,42 @@ h1{
           <h2 class="journey-title">Your Path Through Caring Science</h2>
         </div>
 
-        <div class="path-area" id="pathArea">
+        <div class="path-area">
 
-          <svg class="path-svg" id="pathSvg" viewBox="0 0 1000 760" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="pathGradient" x1="50%" y1="0%" x2="50%" y2="100%">
-                <stop offset="0%" stop-color="#2D6F76"/>
-                <stop offset="44%" stop-color="#9C73D6"/>
-                <stop offset="72%" stop-color="#8FBFA5"/>
-                <stop offset="100%" stop-color="#D8B76A"/>
-              </linearGradient>
-            </defs>
+          <div class="horizontal-path">
 
-            <path
-              class="path-base"
-              id="journeyPathBase"
-              d="M500,55 C455,120 545,180 500,245 C455,310 545,370 500,435 C455,500 545,560 500,625 C482,655 490,685 500,715"
-            />
+            <div class="path-line">
+              <div class="path-progress" id="pathProgress"></div>
+            </div>
 
-            <path
-              class="path-glow"
-              id="pathGlow"
-              d="M500,55 C455,120 545,180 500,245 C455,310 545,370 500,435 C455,500 545,560 500,625 C482,655 490,685 500,715"
-            />
+            <div class="path-stop" data-step="0">1</div>
+            <div class="path-stop" data-step="1">2</div>
+            <div class="path-stop" data-step="2">3</div>
+            <div class="path-stop" data-step="3">4</div>
+            <div class="path-stop" data-step="4">5</div>
+            <div class="path-stop" data-step="5">6</div>
+            <div class="path-stop" data-step="6">7</div>
+            <div class="path-stop" data-step="7">8</div>
 
-            <path
-              class="path-progress"
-              id="pathProgress"
-              d="M500,55 C455,120 545,180 500,245 C455,310 545,370 500,435 C455,500 545,560 500,625 C482,655 490,685 500,715"
-            />
-          </svg>
+            <div class="moving-lotus" id="movingLotus">
+              <svg viewBox="0 0 120 80" aria-hidden="true">
+                <path d="M60 62C52 52 50 39 60 20C70 39 68 52 60 62Z" fill="none" stroke="#2D6F76" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M46 62C34 55 28 43 34 28C48 36 55 48 46 62Z" fill="none" stroke="#7A5C92" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M74 62C86 55 92 43 86 28C72 36 65 48 74 62Z" fill="none" stroke="#9C73D6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M28 68C44 76 76 76 92 68" fill="none" stroke="#D8B76A" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            </div>
 
-          <div class="moving-lotus" id="movingLotus">
-            <svg viewBox="0 0 120 80" aria-hidden="true">
-              <path d="M60 62C52 52 50 39 60 20C70 39 68 52 60 62Z" fill="none" stroke="#2D6F76" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M46 62C34 55 28 43 34 28C48 36 55 48 46 62Z" fill="none" stroke="#7A5C92" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M74 62C86 55 92 43 86 28C72 36 65 48 74 62Z" fill="none" stroke="#9C73D6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M28 68C44 76 76 76 92 68" fill="none" stroke="#D8B76A" stroke-width="5" stroke-linecap="round"/>
-            </svg>
           </div>
 
-          <div class="stop stop-1" data-step="0">
-            <div class="stop-number">1</div>
-            <div class="stop-title">Preparing for the Journey</div>
-            <div class="stop-description">Pause, reflect, and prepare to explore Caring Science with openness and intention.</div>
+          <div class="stop-card" id="stopCard">
+            <div class="stop-label" id="stopLabel">1</div>
+            <h3 class="stop-title" id="stopTitle">Preparing for the Journey</h3>
+            <p class="stop-description" id="stopDescription">
+              Pause, reflect, and prepare to engage with Caring Science through mindfulness, reflection, and intentional learning.
+            </p>
           </div>
 
-          <div class="stop stop-2" data-step="1">
-            <div class="stop-number">2</div>
-            <div class="stop-title">Why Caring Science?</div>
-            <div class="stop-description">Discover why caring matters and how it shapes learning, leadership, and connection.</div>
-          </div>
-
-          <div class="stop stop-3" data-step="2">
-            <div class="stop-number">3</div>
-            <div class="stop-title">What is Human Caring Science?</div>
-            <div class="stop-description">Explore the foundations of Jean Watson’s Human Caring Science and its guiding principles.</div>
-          </div>
-
-          <div class="stop stop-4" data-step="3">
-            <div class="stop-number">4</div>
-            <div class="stop-title">Living the 10 Caritas Processes®</div>
-            <div class="stop-description">Learn about the practices that support authentic presence, connection, and caring interactions.</div>
-          </div>
-
-          <div class="stop stop-5" data-step="4">
-            <div class="stop-number">5</div>
-            <div class="stop-title">Why This Matters to You</div>
-            <div class="stop-description">Consider how Caring Science connects to your experiences, values, and professional purpose.</div>
-          </div>
-
-          <div class="stop stop-6" data-step="5">
-            <div class="stop-number">6</div>
-            <div class="stop-title">A Note of Permission</div>
-            <div class="stop-description">Approach this journey with openness, self-compassion, reflection, and authenticity.</div>
-          </div>
-
-          <div class="stop stop-7" data-step="6">
-            <div class="stop-number">7</div>
-            <div class="stop-title">Applying to Work</div>
-            <div class="stop-description">Explore practical ways to bring Caring Science principles into everyday workplace interactions.</div>
-          </div>
-
-          <div class="stop stop-8" data-step="7">
-            <div class="stop-number">8</div>
-            <div class="stop-title">Integration &amp; Commitment</div>
-            <div class="stop-description">Reflect on your experience and identify how you will integrate Caring Science into your work.</div>
-          </div>
-
-        </div>
-
-        <div class="status-message" id="statusMessage">
-          Your journey is beginning...
         </div>
 
         <div class="final-panel" id="finalPanel">
@@ -649,149 +675,113 @@ const beginBtn = document.getElementById("beginBtn");
 const openingScreen = document.getElementById("openingScreen");
 const journeyScreen = document.getElementById("journeyScreen");
 const movingLotus = document.getElementById("movingLotus");
-const pathArea = document.getElementById("pathArea");
-const pathSvg = document.getElementById("pathSvg");
-const pathBase = document.getElementById("journeyPathBase");
 const pathProgress = document.getElementById("pathProgress");
-const pathGlow = document.getElementById("pathGlow");
-const stops = document.querySelectorAll(".stop");
-const statusMessage = document.getElementById("statusMessage");
+const pathStops = document.querySelectorAll(".path-stop");
+const stopCard = document.getElementById("stopCard");
+const stopLabel = document.getElementById("stopLabel");
+const stopTitle = document.getElementById("stopTitle");
+const stopDescription = document.getElementById("stopDescription");
 const finalPanel = document.getElementById("finalPanel");
 
-const stopProgress = [0, .145, .285, .425, .565, .705, .845, 1];
-
-const statusText = [
-  "Prepare your mind and heart for the journey ahead.",
-  "Begin by exploring why Caring Science matters.",
-  "Move into the foundations of Human Caring Science.",
-  "Explore the 10 Caritas Processes® as caring practices.",
-  "Consider why this work matters to you personally.",
-  "Pause and receive permission to approach this journey with compassion.",
-  "Apply Caring Science principles to workplace interactions.",
-  "Integrate your learning and commit to caring practice."
+const stops = [
+  {
+    title:"Preparing for the Journey",
+    description:"Pause, reflect, and prepare to engage with Caring Science through mindfulness, reflection, and intentional learning."
+  },
+  {
+    title:"Why Caring Science?",
+    description:"Explore the purpose of Caring Science and its impact on individuals, relationships, and organizational culture."
+  },
+  {
+    title:"What is Human Caring Science?",
+    description:"Discover the foundations of Dr. Jean Watson’s Human Caring Science and the principles that support healing, connection, and human flourishing."
+  },
+  {
+    title:"Living the 10 Caritas Processes®",
+    description:"Learn how the 10 Caritas Processes® provide a framework for practicing caring, authentic presence, and compassionate action."
+  },
+  {
+    title:"Why This Matters to You",
+    description:"Reflect on how Caring Science connects to your personal experiences, values, and sense of purpose."
+  },
+  {
+    title:"A Note of Permission",
+    description:"Receive permission to slow down, be present, and engage with this experience in a way that is meaningful for you."
+  },
+  {
+    title:"Applying to Work",
+    description:"Explore practical ways to integrate Caring Science into everyday interactions, decisions, and professional relationships."
+  },
+  {
+    title:"Integration & Commitment",
+    description:"Synthesize your learning and identify meaningful commitments for bringing Caring Science into your daily practice."
+  }
 ];
 
-let pathLength = 0;
+const stopPositions = ["5%","17.85%","30.7%","43.55%","56.4%","69.25%","82.1%","95%"];
+const progressWidths = ["0%","14.7%","29.4%","44.1%","58.8%","73.5%","88.2%","100%"];
+
 let isAnimating = false;
 
-function setupPath(){
-  pathLength = pathBase.getTotalLength();
-
-  pathProgress.style.strokeDasharray = pathLength;
-  pathProgress.style.strokeDashoffset = pathLength;
-
-  pathGlow.style.strokeDasharray = pathLength;
-  pathGlow.style.strokeDashoffset = pathLength;
-}
-
-function placeLotus(progress){
-  const point = pathBase.getPointAtLength(pathLength * progress);
-  const svgRect = pathSvg.getBoundingClientRect();
-
-  const x = (point.x / 1000) * svgRect.width;
-  const y = (point.y / 760) * svgRect.height;
-
-  movingLotus.style.left = x + "px";
-  movingLotus.style.top = y + "px";
-}
-
-function animateAlongPath(startProgress, endProgress, duration, callback){
-  const startTime = performance.now();
-
-  function animate(now){
-    const elapsed = now - startTime;
-    const rawProgress = Math.min(elapsed / duration, 1);
-
-    const easedProgress =
-      rawProgress < .5
-        ? 2 * rawProgress * rawProgress
-        : 1 - Math.pow(-2 * rawProgress + 2, 2) / 2;
-
-    const current =
-      startProgress + (endProgress - startProgress) * easedProgress;
-
-    placeLotus(current);
-
-    pathProgress.style.strokeDashoffset =
-      pathLength - (pathLength * current);
-
-    pathGlow.style.strokeDashoffset =
-      pathLength - (pathLength * current);
-
-    if(rawProgress < 1){
-      requestAnimationFrame(animate);
-    } else {
-      callback();
-    }
-  }
-
-  requestAnimationFrame(animate);
-}
-
-function revealStop(index){
-  stops.forEach(stop => stop.classList.remove("active"));
-
-  stops[index].classList.add("revealed");
-  stops[index].classList.add("active");
-
-  statusMessage.textContent = statusText[index];
-
-  movingLotus.classList.add("pause");
+function showStop(index){
+  stopCard.classList.remove("show");
 
   setTimeout(() => {
-    movingLotus.classList.remove("pause");
-  }, 1400);
+    stopLabel.textContent = index + 1;
+    stopTitle.textContent = stops[index].title;
+    stopDescription.textContent = stops[index].description;
+
+    pathStops.forEach(stop => {
+      stop.classList.remove("active");
+    });
+
+    for(let i = 0; i <= index; i++){
+      pathStops[i].classList.add("revealed");
+    }
+
+    pathStops[index].classList.add("active");
+
+    movingLotus.style.left = stopPositions[index];
+    pathProgress.style.width = progressWidths[index];
+
+    movingLotus.classList.add("pause");
+    stopCard.classList.add("show");
+
+    setTimeout(() => {
+      movingLotus.classList.remove("pause");
+    }, 1600);
+  }, 350);
+}
+
+function runJourney(index){
+  if(index >= stops.length){
+    movingLotus.classList.add("final-bloom");
+    finalPanel.classList.add("show");
+    return;
+  }
+
+  showStop(index);
+
+  setTimeout(() => {
+    runJourney(index + 1);
+  }, 6200);
 }
 
 function startJourney(){
   if(isAnimating) return;
   isAnimating = true;
 
-  setupPath();
-
   openingScreen.classList.add("hidden");
 
   setTimeout(() => {
     journeyScreen.classList.add("active");
     movingLotus.classList.add("active");
-
-    placeLotus(0);
-    revealStop(0);
-
-    runStep(1);
+    stopCard.classList.add("show");
+    runJourney(0);
   }, 500);
 }
 
-function runStep(index){
-  if(index >= stopProgress.length){
-    movingLotus.classList.add("final-bloom");
-    statusMessage.textContent = "";
-    finalPanel.classList.add("show");
-    return;
-  }
-
-  setTimeout(() => {
-    animateAlongPath(
-      stopProgress[index - 1],
-      stopProgress[index],
-      3000,
-      () => {
-        revealStop(index);
-        runStep(index + 1);
-      }
-    );
-  }, 4000);
-}
-
 beginBtn.addEventListener("click", startJourney);
-
-window.addEventListener("resize", () => {
-  if(pathLength > 0){
-    const activeIndex = [...stops].findIndex(stop => stop.classList.contains("active"));
-    const safeIndex = activeIndex >= 0 ? activeIndex : 0;
-    placeLotus(stopProgress[safeIndex]);
-  }
-});
 </script>
 
 </body>
