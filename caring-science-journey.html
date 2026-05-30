@@ -8,7 +8,6 @@
 <style>
 :root{
   --teal:#2D6F76;
-  --deep-teal:#174F57;
   --soft-teal:#A9D8D4;
   --sage:#C9DDD2;
   --lavender:#EDE5F7;
@@ -21,9 +20,7 @@
   --shadow:0 18px 45px rgba(80,65,105,.12);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
   margin:0;
@@ -124,8 +121,9 @@ h1{
   color:var(--text);
 }
 
-.primary-btn{
-  margin-top:32px;
+.primary-btn,
+.journey-next-btn{
+  margin-top:30px;
   border:none;
   border-radius:999px;
   padding:15px 34px;
@@ -139,7 +137,8 @@ h1{
   transition:.25s ease;
 }
 
-.primary-btn:hover{
+.primary-btn:hover,
+.journey-next-btn:hover{
   transform:translateY(-2px);
   background:#684A82;
 }
@@ -159,7 +158,7 @@ h1{
 
 .journey-header{
   text-align:center;
-  margin-bottom:30px;
+  margin-bottom:26px;
 }
 
 .kicker{
@@ -176,6 +175,14 @@ h1{
   color:var(--purple);
   margin:0;
   line-height:1.1;
+}
+
+.journey-instruction{
+  max-width:680px;
+  margin:14px auto 0;
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--muted);
 }
 
 .path-area{
@@ -218,18 +225,11 @@ h1{
   height:100%;
   width:0%;
   border-radius:999px;
-  background:
-    linear-gradient(
-      90deg,
-      var(--teal),
-      var(--purple),
-      #8FBFA5,
-      var(--gold)
-    );
+  background:linear-gradient(90deg,var(--teal),var(--purple),#8FBFA5,var(--gold));
   box-shadow:
     0 0 16px rgba(45,111,118,.28),
     0 0 28px rgba(216,183,106,.18);
-  transition:width 3s cubic-bezier(.4,0,.2,1);
+  transition:width 1.4s cubic-bezier(.4,0,.2,1);
 }
 
 .path-stop{
@@ -256,12 +256,7 @@ h1{
 
 .path-stop.revealed{
   border-color:rgba(45,111,118,.55);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(169,216,212,.65),
-      rgba(237,229,247,.75)
-    );
+  background:linear-gradient(135deg,rgba(169,216,212,.65),rgba(237,229,247,.75));
 }
 
 .path-stop.active{
@@ -281,7 +276,7 @@ h1{
 .path-stop:nth-child(7){ left:82.1%; }
 .path-stop:nth-child(8){ left:95%; }
 
-/* SOPHISTICATED LOTUS */
+/* LOTUS */
 
 .moving-lotus{
   position:absolute;
@@ -290,8 +285,7 @@ h1{
   width:66px;
   height:66px;
   border-radius:50%;
-  background:
-    radial-gradient(circle at 35% 30%, rgba(255,255,255,.98), rgba(252,250,247,.86));
+  background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.98), rgba(252,250,247,.86));
   box-shadow:
     0 0 18px rgba(216,183,106,.38),
     0 0 42px rgba(169,216,212,.50),
@@ -302,7 +296,7 @@ h1{
   opacity:0;
   transform:translate(-50%,-50%) scale(.82);
   transition:
-    left 3s cubic-bezier(.4,0,.2,1),
+    left 1.4s cubic-bezier(.4,0,.2,1),
     opacity .5s ease,
     transform .6s ease,
     box-shadow .6s ease;
@@ -330,31 +324,27 @@ h1{
     0 0 120px rgba(122,92,146,.38);
 }
 
-.moving-lotus::before,
-.moving-lotus::after{
-  content:"";
-  position:absolute;
-  inset:-8px;
-  border-radius:50%;
-  border:1px solid rgba(216,183,106,.28);
-  opacity:0;
-}
-
-.moving-lotus.pause::before{
-  animation:ripple 1.35s ease-out;
-}
-
-.moving-lotus.pause::after{
-  animation:ripple 1.35s ease-out .3s;
-}
-
 .moving-lotus svg{
   width:40px;
   height:29px;
   animation:lotusFloat 3s ease-in-out infinite;
 }
 
-/* ACTIVE CARD */
+.moving-lotus.pause::before,
+.moving-lotus.pause::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:1px solid rgba(216,183,106,.28);
+  animation:ripple 1.35s ease-out;
+}
+
+.moving-lotus.pause::after{
+  animation-delay:.3s;
+}
+
+/* CARD */
 
 .stop-card{
   max-width:760px;
@@ -362,12 +352,7 @@ h1{
   margin:0 auto;
   padding:30px 34px;
   border-radius:30px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,253,248,.98),
-      rgba(252,250,247,.96)
-    );
+  background:linear-gradient(145deg,rgba(255,253,248,.98),rgba(252,250,247,.96));
   border:1px solid rgba(122,92,146,.13);
   box-shadow:
     0 16px 38px rgba(80,65,105,.12),
@@ -391,12 +376,7 @@ h1{
   height:34px;
   border-radius:50%;
   margin-bottom:14px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(169,216,212,.75),
-      rgba(237,229,247,.85)
-    );
+  background:linear-gradient(135deg,rgba(169,216,212,.75),rgba(237,229,247,.85));
   color:var(--teal);
   font-size:.86rem;
   font-weight:800;
@@ -418,6 +398,10 @@ h1{
   color:var(--muted);
 }
 
+.card-actions{
+  text-align:center;
+}
+
 .final-panel{
   display:none;
   max-width:820px;
@@ -425,8 +409,7 @@ h1{
   padding:24px 28px;
   border-radius:28px;
   text-align:center;
-  background:
-    linear-gradient(145deg, rgba(255,253,248,.96), rgba(252,250,247,.98));
+  background:linear-gradient(145deg,rgba(255,253,248,.96),rgba(252,250,247,.98));
   border:1px solid rgba(216,183,106,.30);
   box-shadow:
     0 14px 34px rgba(80,65,105,.10),
@@ -474,10 +457,7 @@ h1{
   100%{ transform:scale(1.9); opacity:0; }
 }
 
-/* MOBILE */
-
 @media(max-width:900px){
-
   .journey-card{
     padding:30px 20px;
     min-height:auto;
@@ -514,11 +494,9 @@ h1{
   .stop-description{
     font-size:1rem;
   }
-
 }
 
 @media(max-width:600px){
-
   body{
     padding:12px;
   }
@@ -534,10 +512,6 @@ h1{
 
   .opening-copy{
     font-size:1rem;
-  }
-
-  .journey-header{
-    margin-bottom:20px;
   }
 
   .horizontal-path{
@@ -571,7 +545,6 @@ h1{
     min-height:260px;
     padding:24px 18px;
   }
-
 }
 </style>
 </head>
@@ -579,13 +552,10 @@ h1{
 <body>
 
 <div class="journey-wrapper">
-
   <div class="journey-card">
-
     <div class="content">
 
       <section class="opening-screen" id="openingScreen">
-
         <svg class="lotus-opening" viewBox="0 0 120 80" aria-hidden="true">
           <path d="M60 62C52 52 50 39 60 20C70 39 68 52 60 62Z" fill="none" stroke="#2D6F76" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M46 62C34 55 28 43 34 28C48 36 55 48 46 62Z" fill="none" stroke="#7A5C92" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -601,23 +571,20 @@ h1{
           Throughout this orientation, you will explore the foundations of Caring Science, pause for reflection, discover practical applications, and identify meaningful ways to bring caring into everyday interactions.
         </p>
 
-        <button class="primary-btn" id="beginBtn">
-          Begin the Journey
-        </button>
-
+        <button class="primary-btn" id="beginBtn">Begin the Journey</button>
       </section>
 
       <section class="journey-screen" id="journeyScreen">
-
         <div class="journey-header">
           <div class="kicker">Learning Journey</div>
           <h2 class="journey-title">Your Path Through Caring Science</h2>
+          <p class="journey-instruction">
+            Select <strong>Next Stop</strong> to move through the journey at your own pace.
+          </p>
         </div>
 
         <div class="path-area">
-
           <div class="horizontal-path">
-
             <div class="path-line">
               <div class="path-progress" id="pathProgress"></div>
             </div>
@@ -639,7 +606,6 @@ h1{
                 <path d="M28 68C44 76 76 76 92 68" fill="none" stroke="#D8B76A" stroke-width="5" stroke-linecap="round"/>
               </svg>
             </div>
-
           </div>
 
           <div class="stop-card" id="stopCard">
@@ -650,24 +616,23 @@ h1{
             </p>
           </div>
 
+          <div class="card-actions">
+            <button class="journey-next-btn" id="nextBtn">Next Stop</button>
+          </div>
         </div>
 
         <div class="final-panel" id="finalPanel">
           <p class="final-message">
             Every caring interaction creates a ripple that extends beyond ourselves.
           </p>
-
           <p class="final-ready">
             Your Caring Science journey is ready to begin.
           </p>
         </div>
-
       </section>
 
     </div>
-
   </div>
-
 </div>
 
 <script>
@@ -682,6 +647,7 @@ const stopLabel = document.getElementById("stopLabel");
 const stopTitle = document.getElementById("stopTitle");
 const stopDescription = document.getElementById("stopDescription");
 const finalPanel = document.getElementById("finalPanel");
+const nextBtn = document.getElementById("nextBtn");
 
 const stops = [
   {
@@ -721,7 +687,8 @@ const stops = [
 const stopPositions = ["5%","17.85%","30.7%","43.55%","56.4%","69.25%","82.1%","95%"];
 const progressWidths = ["0%","14.7%","29.4%","44.1%","58.8%","73.5%","88.2%","100%"];
 
-let isAnimating = false;
+let currentIndex = 0;
+let hasStarted = false;
 
 function showStop(index){
   stopCard.classList.remove("show");
@@ -731,9 +698,7 @@ function showStop(index){
     stopTitle.textContent = stops[index].title;
     stopDescription.textContent = stops[index].description;
 
-    pathStops.forEach(stop => {
-      stop.classList.remove("active");
-    });
+    pathStops.forEach(stop => stop.classList.remove("active"));
 
     for(let i = 0; i <= index; i++){
       pathStops[i].classList.add("revealed");
@@ -749,39 +714,40 @@ function showStop(index){
 
     setTimeout(() => {
       movingLotus.classList.remove("pause");
-    }, 1600);
-  }, 350);
-}
+    }, 1300);
 
-function runJourney(index){
-  if(index >= stops.length){
-    movingLotus.classList.add("final-bloom");
-    finalPanel.classList.add("show");
-    return;
-  }
-
-  showStop(index);
-
-  setTimeout(() => {
-    runJourney(index + 1);
-  }, 6200);
+    nextBtn.textContent = index === stops.length - 1 ? "Complete Journey" : "Next Stop";
+  }, 250);
 }
 
 function startJourney(){
-  if(isAnimating) return;
-  isAnimating = true;
+  if(hasStarted) return;
+  hasStarted = true;
 
   openingScreen.classList.add("hidden");
 
   setTimeout(() => {
     journeyScreen.classList.add("active");
     movingLotus.classList.add("active");
-    stopCard.classList.add("show");
-    runJourney(0);
+    currentIndex = 0;
+    showStop(currentIndex);
   }, 500);
 }
 
+function nextStop(){
+  if(currentIndex < stops.length - 1){
+    currentIndex++;
+    showStop(currentIndex);
+  } else {
+    movingLotus.classList.add("final-bloom");
+    stopCard.classList.remove("show");
+    nextBtn.style.display = "none";
+    finalPanel.classList.add("show");
+  }
+}
+
 beginBtn.addEventListener("click", startJourney);
+nextBtn.addEventListener("click", nextStop);
 </script>
 
 </body>
