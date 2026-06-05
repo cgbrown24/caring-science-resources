@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Living the Caritas Processes® Reflection Journal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --soft-lavender:#F3EDF7;
+  --soft-lavender-dark:#7A5C92;
+  --soft-purple:#9C73D6;
+  --deep-teal:#2D6F76;
+  --soft-cream:#FCFAF7;
+  --card:#FFFEFC;
+  --border:#E6DFF0;
+  --text:#4D5360;
+  --muted:#7E7787;
+  --shadow:0 12px 35px rgba(80,65,105,.10);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:20px;
+  background:transparent;
+  font-family:"Outfit", sans-serif;
+  color:var(--text);
+}
+
+.wrapper{
+  width:100%;
+  max-width:1150px;
+  margin:0 auto;
+}
+
+.journal-card{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(243,237,247,.98),
+      rgba(255,255,255,.96)
+    );
+  border:1px solid var(--border);
+  border-radius:30px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+
+.journal-card::before{
+  content:"";
+  position:absolute;
+  width:320px;
+  height:320px;
+  top:-180px;
+  right:-120px;
+  background:
+    radial-gradient(
+      circle,
+      rgba(156,115,214,.10),
+      transparent 72%
+    );
+  pointer-events:none;
+}
+
+.journal-card::after{
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  bottom:-180px;
+  left:-120px;
+  background:
+    radial-gradient(
+      circle,
+      rgba(45,111,118,.08),
+      transparent 72%
+    );
+  pointer-events:none;
+}
+
+.intro-section{
+  padding:42px 42px 28px;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+
+.lotus-wrap{
+  margin-bottom:14px;
+  display:flex;
+  justify-content:center;
+}
+
+.lotus-svg{
+  width:58px;
+  height:auto;
+  filter:
+    drop-shadow(0 2px 6px rgba(45,111,118,.08));
+}
+
+.title{
+  font-size:14px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--soft-lavender-dark);
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.journal-subtitle{
+  max-width:620px;
+  margin:0 auto 22px;
+  font-size:16px;
+  line-height:1.7;
+  color:var(--muted);
+  font-weight:400;
+}
+
+.module-heading{
+  font-family:"Cormorant Garamond", serif;
+  font-size:42px;
+  color:var(--soft-lavender-dark);
+  font-weight:600;
+  margin:0 0 16px;
+}
+
+.instructions{
+  max-width:800px;
+  margin:0 auto;
+  font-size:17px;
+  line-height:1.8;
+  color:var(--text);
+}
+
+.instructions p{
+  margin:0 0 14px;
+}
+
+.open-btn{
+  margin-top:28px;
+  background:var(--soft-lavender-dark);
+  color:white;
+  border:none;
+  padding:14px 34px;
+  border-radius:999px;
+  font-family:"Outfit", sans-serif;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.05em;
+  cursor:pointer;
+  transition:.25s ease;
+}
+
+.open-btn:hover{
+  transform:translateY(-1px);
+  background:#694B82;
+}
+
+.journal-content{
+  display:none;
+  padding:0 42px 36px;
+  position:relative;
+  z-index:2;
+}
+
+.journal-content.active{
+  display:block;
+  animation:fadeIn .45s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.prompt-card{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.92),
+      rgba(250,247,252,.95)
+    );
+  border:1px solid rgba(156,115,214,.18);
+  border-radius:22px;
+  padding:22px 24px;
+  margin-bottom:22px;
+  box-shadow:
+    0 4px 18px rgba(120,90,150,.05);
+}
+
+.prompt-label{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--soft-lavender-dark);
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.prompt-text{
+  font-size:18px;
+  line-height:1.8;
+  color:var(--text);
+}
+
+.date{
+  text-align:right;
+  margin-bottom:18px;
+  color:var(--soft-lavender-dark);
+  font-size:14px;
+  font-weight:600;
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
+}
+
+.pen{
+  color:var(--deep-teal);
+  font-size:24px;
+  transform:rotate(-8deg);
+}
+
+.swirl{
+  flex:1;
+  height:24px;
+  position:relative;
+}
+
+.swirl::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:12px;
+  width:100%;
+  height:16px;
+  border-top:
+    1.5px solid rgba(45,111,118,.25);
+  border-radius:50%;
+}
+
+.swirl::after{
+  content:"";
+  position:absolute;
+  left:22%;
+  top:0;
+  width:180px;
+  height:22px;
+  border-bottom:
+    1.5px solid rgba(156,115,214,.25);
+  border-radius:0 0 100% 100%;
+  transform:rotate(-6deg);
+}
+
+textarea{
+  width:100%;
+  min-height:180px;
+  resize:vertical;
+  border:1px solid rgba(156,115,214,.22);
+  border-radius:22px;
+  padding:22px;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0) 35px,
+      rgba(190,175,210,.18) 36px
+    ),
+    rgba(255,255,255,.92);
+  background-size:100% 36px;
+  font-family:"Outfit", sans-serif;
+  font-size:16px;
+  line-height:2.25;
+  color:var(--text);
+  outline:none;
+  transition:.25s ease;
+}
+
+textarea:focus{
+  border-color:rgba(122,92,146,.45);
+  box-shadow:
+    0 0 0 5px rgba(122,92,146,.08);
+}
+
+.footer{
+  margin-top:20px;
+}
+
+.button-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.word-count{
+  color:var(--soft-lavender-dark);
+  font-size:14px;
+  font-weight:600;
+}
+
+.buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.action-btn{
+  border:none;
+  border-radius:999px;
+  padding:13px 22px;
+  font-family:"Outfit", sans-serif;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.action-btn:hover{
+  transform:translateY(-1px);
+}
+
+.save-btn{
+  background:var(--soft-lavender-dark);
+  color:white;
+}
+
+.download-btn{
+  background:rgba(45,111,118,.12);
+  color:var(--deep-teal);
+}
+
+.closing{
+  margin-top:18px;
+  text-align:center;
+  font-family:"Cormorant Garamond", serif;
+  font-size:20px;
+  line-height:1.8;
+  color:var(--muted);
+  font-style:italic;
+}
+
+@media(max-width:768px){
+
+  body{
+    padding:12px;
+  }
+
+  .intro-section{
+    padding:32px 22px 24px;
+  }
+
+  .journal-content{
+    padding:0 22px 28px;
+  }
+
+  .module-heading{
+    font-size:34px;
+  }
+
+  textarea{
+    min-height:220px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="journal-card">
+
+  <div class="intro-section">
+
+    <div class="lotus-wrap">
+
+      <svg class="lotus-svg" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+        <path d="M60 62C52 52 50 39 60 20C70 39 68 52 60 62Z"
+              fill="none"
+              stroke="#2D6F76"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+
+        <path d="M46 62C34 55 28 43 34 28C48 36 55 48 46 62Z"
+              fill="none"
+              stroke="#7A5C92"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+
+        <path d="M74 62C86 55 92 43 86 28C72 36 65 48 74 62Z"
+              fill="none"
+              stroke="#7A5C92"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+
+        <path d="M32 64C22 62 14 54 12 44C28 45 40 52 50 65"
+              fill="none"
+              stroke="#9C73D6"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+
+        <path d="M88 64C98 62 106 54 108 44C92 45 80 52 70 65"
+              fill="none"
+              stroke="#9C73D6"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+
+        <path d="M28 68C44 76 76 76 92 68"
+              fill="none"
+              stroke="#2D6F76"
+              stroke-width="4"
+              stroke-linecap="round"/>
+
+      </svg>
+
+    </div>
+
+    <div class="title">
+      Journal
+    </div>
+
+    <div class="journal-subtitle">
+      This space is intended for personal reflection and growth.
+    </div>
+
+    <h1 class="module-heading">
+      Living the Caritas Processes®
+    </h1>
+
+    <div class="instructions">
+
+      <p>
+        Take a quiet moment to consider how caring behaviors show up in daily workplace interactions.
+      </p>
+
+      <p>
+        When you are ready, select the button below to open your journal.
+      </p>
+
+    </div>
+
+    <button class="open-btn" id="openJournalBtn">
+      OPEN JOURNAL
+    </button>
+
+  </div>
+
+  <div class="journal-content" id="journalContent">
+
+    <div class="date" id="dateStamp"></div>
+
+    <div class="prompt-card">
+
+      <div class="prompt-label">
+        Reflection Prompt
+      </div>
+
+      <div class="prompt-text">
+        Take a moment to reflect on your experience so far in your role. What caring behaviors have you witnessed from others within the workplace? What opportunities have you noticed to strengthen caring behaviors in your workplace? What is one caring behavior you would like to model more consistently yourself?
+      </div>
+
+    </div>
+
+    <div class="divider">
+
+      <div class="pen">
+        🖋
+      </div>
+
+      <div class="swirl"></div>
+
+    </div>
+
+    <textarea
+      id="journalText"
+      placeholder="Begin writing your reflection here..."
+    ></textarea>
+
+    <div class="footer">
+
+      <div class="button-row">
+
+        <div class="word-count" id="wordCount">
+          0 words
+        </div>
+
+        <div class="buttons">
+
+          <button class="action-btn save-btn" id="saveBtn">
+            Save Reflection
+          </button>
+
+          <button class="action-btn download-btn" id="downloadBtn">
+            Download Reflection
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="closing">
+        ✦ Caring behaviors become meaningful when they are practiced with intention, consistency, and presence. ✦
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+<script>
+
+const STORAGE_KEY = 'lesson_4_living_caritas_processes_reflection';
+
+const openBtn = document.getElementById('openJournalBtn');
+const journalContent = document.getElementById('journalContent');
+const textarea = document.getElementById('journalText');
+const wordCount = document.getElementById('wordCount');
+const saveBtn = document.getElementById('saveBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const dateStamp = document.getElementById('dateStamp');
+
+const today = new Date();
+
+dateStamp.textContent =
+today.toLocaleDateString(undefined,{
+  month:'long',
+  day:'numeric',
+  year:'numeric'
+});
+
+openBtn.addEventListener('click',()=>{
+
+  journalContent.classList.add('active');
+
+  openBtn.style.display = 'none';
+
+});
+
+const saved = localStorage.getItem(STORAGE_KEY);
+
+if(saved){
+  textarea.value = saved;
+}
+
+function updateWordCount(){
+
+  const words =
+    textarea.value
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .length;
+
+  wordCount.textContent =
+    `${words} ${words === 1 ? 'word' : 'words'}`;
+
+}
+
+updateWordCount();
+
+textarea.addEventListener('input',()=>{
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    textarea.value
+  );
+
+  updateWordCount();
+
+});
+
+saveBtn.addEventListener('click',()=>{
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    textarea.value
+  );
+
+});
+
+downloadBtn.addEventListener('click',()=>{
+
+const content = `Lesson 4 Reflection: Living the Caritas Processes®
+
+Date:
+${dateStamp.textContent}
+
+Prompt:
+Take a moment to reflect on your experience so far in your role. What caring behaviors have you witnessed from others within the workplace? What opportunities have you noticed to strengthen caring behaviors in your workplace? What is one caring behavior you would like to model more consistently yourself?
+
+Reflection:
+${textarea.value}
+
+`;
+
+const blob = new Blob(
+  [content],
+  {type:'text/plain'}
+);
+
+const link =
+  document.createElement('a');
+
+link.href =
+  URL.createObjectURL(blob);
+
+link.download =
+  'lesson-4-living-caritas-processes-reflection.txt';
+
+link.click();
+
+});
+
+</script>
+
+</body>
+</html>
