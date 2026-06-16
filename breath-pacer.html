@@ -1,670 +1,476 @@
-<div class="aurora"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mindful Pause Breath Pacer</title>
 
-<div class="particles">
-  <span></span><span></span><span></span><span></span>
-  <span></span><span></span><span></span><span></span>
-</div>
+<style>
+:root{
+  --teal:#2D6F76;
+  --soft-teal:#A9D8D4;
+  --lavender:#EDE5F7;
+  --purple:#7A5C92;
+  --deep-purple:#684A82;
+  --gold:#D8B76A;
+  --ivory:#FFFDF8;
+  --cream:#FCFAF7;
+  --text:#FFFFFF;
+}
 
-<div class="pacer-shell">
-  <div class="content">
+*{
+  box-sizing:border-box;
+}
 
-    <h1>Return to Presence</h1>
+body{
+  margin:0;
+  padding:12px;
+  background:transparent;
+  font-family:"Segoe UI", Arial, sans-serif;
+}
 
-    <p class="instruction" id="instruction">
-      Take a mindful moment to ground yourself before continuing.
-    </p>
+.pacer-wrapper{
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+}
 
-    <div class="breath-stage">
-      <div class="ripple ripple-one"></div>
-      <div class="ripple ripple-two"></div>
-      <div class="ripple ripple-three"></div>
+.pacer-card{
+  min-height:560px;
+  border-radius:34px;
+  padding:28px 24px;
+  overflow:hidden;
+  position:relative;
+  text-align:center;
+  color:white;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(169,216,212,.42), transparent 34%),
+    radial-gradient(circle at 84% 18%, rgba(237,229,247,.58), transparent 35%),
+    radial-gradient(circle at 50% 90%, rgba(216,183,106,.16), transparent 35%),
+    linear-gradient(145deg, #2D6F76, #7A5C92);
+  box-shadow:0 24px 60px rgba(80,65,105,.22);
+}
 
-      <div class="outer-ring"></div>
-      <div class="middle-ring"></div>
+.pacer-card::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.12), transparent 45%);
+  animation:softDrift 14s ease-in-out infinite alternate;
+  pointer-events:none;
+}
 
-      <div class="breath-circle" id="breathCircle">
+.content{
+  position:relative;
+  z-index:2;
+}
 
-        <span id="breathText">Breathe</span>
+h1{
+  margin:0 0 10px;
+  font-size:clamp(2rem, 4vw, 3rem);
+  font-weight:650;
+  letter-spacing:-.02em;
+}
 
-        <div class="breath-dots">
-          <span></span>
-          <span></span>
-        </div>
+.instructions{
+  max-width:620px;
+  margin:0 auto 16px;
+  font-size:1.12rem;
+  line-height:1.65;
+  color:white;
+  text-shadow:0 2px 12px rgba(0,0,0,.22);
+}
 
-        <svg class="lotus-icon" viewBox="0 0 120 80">
+.sound-row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin:10px 0 18px;
+  flex-wrap:wrap;
+}
 
-          <defs>
-            <linearGradient id="lotusGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#00a7a7"/>
-              <stop offset="45%" stop-color="#256fa8"/>
-              <stop offset="100%" stop-color="#7f45d8"/>
-            </linearGradient>
-          </defs>
+.sound-btn{
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.14);
+  color:white;
+  padding:9px 18px;
+  border-radius:999px;
+  font-size:.92rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:.25s ease;
+}
 
-          <path d="M60 62 C48 48 45 32 60 14 C75 32 72 48 60 62Z"></path>
-          <path d="M45 64 C30 56 22 42 26 24 C44 31 53 45 45 64Z"></path>
-          <path d="M75 64 C90 56 98 42 94 24 C76 31 67 45 75 64Z"></path>
-          <path d="M60 66 C42 67 28 61 16 48 C35 46 50 50 60 66Z"></path>
-          <path d="M60 66 C78 67 92 61 104 48 C85 46 70 50 60 66Z"></path>
-          <path d="M30 70 C48 76 72 76 90 70"></path>
+.sound-btn:hover{
+  background:rgba(255,255,255,.22);
+  transform:translateY(-1px);
+}
 
-        </svg>
+.sound-note{
+  font-size:.86rem;
+  color:rgba(255,255,255,.88);
+}
 
+.breath-area{
+  height:295px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.orb{
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,253,248,.96), rgba(252,250,247,.86));
+  box-shadow:
+    0 0 28px rgba(216,183,106,.42),
+    0 0 62px rgba(169,216,212,.52),
+    0 0 92px rgba(122,92,146,.28);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  transition:transform 6s ease-in-out;
+}
+
+.orb.inhale{
+  transform:scale(1.18);
+}
+
+.orb.exhale{
+  transform:scale(.92);
+}
+
+.orb::before,
+.orb::after{
+  content:"";
+  position:absolute;
+  inset:-22px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.32);
+  opacity:.55;
+}
+
+.orb::after{
+  inset:-42px;
+  border-color:rgba(216,183,106,.20);
+}
+
+.orb-inner{
+  text-align:center;
+  color:var(--purple);
+}
+
+.breath-word{
+  font-size:1.65rem;
+  font-weight:750;
+  margin-bottom:5px;
+}
+
+.breath-count{
+  font-size:.92rem;
+  color:#5E6470;
+  font-weight:600;
+}
+
+.lotus{
+  width:58px;
+  margin:8px auto 0;
+}
+
+.dot-row{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin-bottom:6px;
+}
+
+.dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--teal), var(--purple));
+  box-shadow:0 0 8px rgba(45,111,118,.35);
+}
+
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+button.main-btn{
+  border:none;
+  border-radius:999px;
+  padding:13px 30px;
+  font-size:.98rem;
+  font-weight:750;
+  cursor:pointer;
+  transition:.25s ease;
+  box-shadow:0 14px 30px rgba(0,0,0,.18);
+}
+
+.begin-btn{
+  background:white;
+  color:var(--purple);
+}
+
+.reset-btn{
+  background:rgba(255,255,255,.12);
+  color:white;
+  border:1px solid rgba(255,255,255,.28) !important;
+}
+
+button.main-btn:hover{
+  transform:translateY(-2px);
+}
+
+.status{
+  margin-top:14px;
+  font-size:.95rem;
+  color:rgba(255,255,255,.92);
+}
+
+@keyframes softDrift{
+  from{
+    transform:translate(-4%, -4%) rotate(0deg);
+  }
+  to{
+    transform:translate(4%, 4%) rotate(10deg);
+  }
+}
+
+@media(max-width:600px){
+  .pacer-card{
+    min-height:540px;
+    padding:24px 16px;
+    border-radius:28px;
+  }
+
+  .instructions{
+    font-size:1rem;
+  }
+
+  .breath-area{
+    height:275px;
+  }
+
+  .orb{
+    width:170px;
+    height:170px;
+  }
+
+  .breath-word{
+    font-size:1.45rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="pacer-wrapper">
+  <div class="pacer-card">
+    <div class="content">
+
+      <h1>Mindful Pause</h1>
+
+      <p class="instructions">
+        Arrive in the moment. Press begin to start your breathing practice. Breathe in for 4 seconds and breathe out for 6 seconds.
+      </p>
+
+      <div class="sound-row">
+        <button class="sound-btn" id="soundBtn" aria-label="Turn sound on or off">
+          ♫ Sound Off
+        </button>
+        <span class="sound-note">
+          Optional soft piano
+        </span>
       </div>
+
+      <div class="breath-area">
+        <div class="orb" id="orb">
+          <div class="orb-inner">
+            <div class="breath-word" id="breathWord">
+              Ready
+            </div>
+
+            <div class="breath-count" id="breathCount">
+              Begin when ready
+            </div>
+
+            <div class="dot-row">
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+
+            <svg class="lotus" viewBox="0 0 120 80" aria-hidden="true">
+              <path d="M60 62C52 52 50 39 60 20C70 39 68 52 60 62Z" fill="none" stroke="#2D6F76" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M46 62C34 55 28 43 34 28C48 36 55 48 46 62Z" fill="none" stroke="#7A5C92" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M74 62C86 55 92 43 86 28C72 36 65 48 74 62Z" fill="none" stroke="#9C73D6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M28 68C44 76 76 76 92 68" fill="none" stroke="#D8B76A" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="main-btn begin-btn" id="beginBtn">
+          Begin
+        </button>
+
+        <button class="main-btn reset-btn" id="resetBtn">
+          Reset
+        </button>
+      </div>
+
+      <div class="status" id="statusText">
+        Sound is optional. You may complete this pause with or without music.
+      </div>
+
+      <audio id="breathAudio" src="audio/breath-piano.mp3" loop preload="auto"></audio>
+
     </div>
-
-    <div class="timer-text" id="timerText">
-      4 second inhale · 6 second exhale
-    </div>
-
-    <div class="completion-message" id="completionMessage">
-      You are grounded. Return with intention.
-    </div>
-
-    <div class="controls">
-      <button id="startBtn">Begin</button>
-
-      <button id="resetBtn" class="secondary">
-        Reset
-      </button>
-    </div>
-
   </div>
 </div>
 
-<style>
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-
-  font-family:
-    "Inter",
-    "Segoe UI",
-    sans-serif;
-
-  background:
-    linear-gradient(
-      -45deg,
-      #082f49,
-      #0f4c5c,
-      #4b3f72,
-      #8a7db8,
-      #f3eee7
-    );
-
-  background-size: 500% 500%;
-
-  animation:
-    gradientFlow 22s ease infinite;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-
-  padding: 12px;
-}
-
-.aurora {
-  position: fixed;
-  inset: -20%;
-
-  background:
-    radial-gradient(circle at 20% 30%, rgba(184,216,216,0.35), transparent 35%),
-    radial-gradient(circle at 80% 20%, rgba(214,199,255,0.35), transparent 35%),
-    radial-gradient(circle at 50% 85%, rgba(248,244,239,0.22), transparent 40%);
-
-  filter: blur(28px);
-
-  animation:
-    auroraMove 18s ease-in-out infinite alternate;
-
-  pointer-events: none;
-}
-
-.particles {
-  position: fixed;
-  inset: 0;
-
-  overflow: hidden;
-
-  pointer-events: none;
-}
-
-.particles span {
-  position: absolute;
-
-  display: block;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,0.95),
-      rgba(220,210,255,0.35)
-    );
-
-  box-shadow:
-    0 0 22px rgba(255,255,255,0.9),
-    0 0 48px rgba(214,199,255,0.5);
-
-  animation:
-    floatUp linear infinite;
-
-  bottom: -150px;
-}
-
-.particles span:nth-child(1) { left: 6%; width: 22px; height: 22px; animation-duration: 22s; }
-.particles span:nth-child(2) { left: 18%; width: 12px; height: 12px; animation-duration: 16s; }
-.particles span:nth-child(3) { left: 32%; width: 26px; height: 26px; animation-duration: 26s; }
-.particles span:nth-child(4) { left: 48%; width: 16px; height: 16px; animation-duration: 18s; }
-.particles span:nth-child(5) { left: 62%; width: 28px; height: 28px; animation-duration: 28s; }
-.particles span:nth-child(6) { left: 74%; width: 14px; height: 14px; animation-duration: 19s; }
-.particles span:nth-child(7) { left: 86%; width: 20px; height: 20px; animation-duration: 24s; }
-.particles span:nth-child(8) { left: 94%; width: 12px; height: 12px; animation-duration: 15s; }
-
-.pacer-shell {
-  width: min(860px, 100%);
-
-  padding: 28px 34px;
-
-  border-radius: 36px;
-
-  background:
-    rgba(248,244,239,0.12);
-
-  backdrop-filter: blur(26px);
-
-  border:
-    1px solid rgba(255,255,255,0.18);
-
-  box-shadow:
-    0 35px 90px rgba(0,0,0,0.34),
-    inset 0 0 0 1px rgba(255,255,255,0.08);
-
-  position: relative;
-
-  overflow: hidden;
-
-  text-align: center;
-
-  color: #fffaf5;
-}
-
-.pacer-shell::before {
-  content: "";
-
-  position: absolute;
-
-  inset: -40%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,0.12),
-      transparent 48%
-    );
-
-  animation:
-    shimmer 16s ease-in-out infinite alternate;
-}
-
-.content {
-  position: relative;
-  z-index: 2;
-}
-
-h1 {
-  font-size:
-    clamp(2rem, 4vw, 3.3rem);
-
-  margin: 0 0 14px;
-
-  font-weight: 650;
-}
-
-.instruction {
-  max-width: 640px;
-  margin: 0 auto 22px;
-  line-height: 1.6;
-  font-size: 1.05rem;
-  opacity: 1;
-  text-shadow:
-    0 2px 10px rgba(0,0,0,0.22);
-}
-
-.breath-stage {
-  width: 260px;
-  height: 260px;
-
-  margin: 0 auto 16px;
-
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.outer-ring,
-.middle-ring,
-.ripple {
-  position: absolute;
-  border-radius: 50%;
-}
-
-.outer-ring {
-  width: 240px;
-  height: 240px;
-
-  border:
-    1px solid rgba(255,255,255,0.28);
-
-  box-shadow:
-    0 0 40px rgba(214,199,255,0.12);
-}
-
-.middle-ring {
-  width: 190px;
-  height: 190px;
-
-  background:
-    rgba(255,255,255,0.06);
-
-  box-shadow:
-    inset 0 0 20px rgba(255,255,255,0.06),
-    0 0 70px rgba(214,199,255,0.15);
-}
-
-.ripple {
-  width: 140px;
-  height: 140px;
-
-  border:
-    1px solid rgba(248,244,239,0.42);
-
-  opacity: 0;
-
-  transform: scale(1);
-}
-
-.breath-stage.active .ripple-one {
-  animation:
-    rippleWave 8s ease-out infinite;
-}
-
-.breath-stage.active .ripple-two {
-  animation:
-    rippleWave 8s ease-out infinite;
-
-  animation-delay: 2s;
-}
-
-.breath-stage.active .ripple-three {
-  animation:
-    rippleWave 8s ease-out infinite;
-
-  animation-delay: 4s;
-}
-
-.breath-circle {
-  width: 140px;
-  height: 140px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #fffaf2 0%,
-      #f2e5d3 52%,
-      #e7d9c7 80%,
-      #d9e8e5 100%
-    );
-
-  box-shadow:
-    0 0 25px rgba(255,245,232,0.35),
-    0 0 80px rgba(120,220,220,0.14);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  color: #244b57;
-
-  font-size: 1.08rem;
-  font-weight: 700;
-
-  transition:
-    transform 6s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 6s ease;
-
-  z-index: 5;
-
-  gap: 5px;
-}
-
-.breath-dots {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.breath-dots span {
-  width: 6px;
-  height: 6px;
-
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #00a7a7,
-      #7f45d8
-    );
-
-  box-shadow:
-    0 0 10px rgba(255,255,255,0.3);
-}
-
-.lotus-icon {
-  width: 52px;
-  height: 38px;
-
-  fill: none;
-
-  stroke: url(#lotusGradient);
-
-  stroke-width: 5;
-
-  stroke-linecap: round;
-  stroke-linejoin: round;
-
-  opacity: 1;
-
-  filter:
-    drop-shadow(0 2px 8px rgba(255,255,255,0.28));
-}
-
-.breath-circle.inhale {
-  transform: scale(1.55);
-
-  box-shadow:
-    0 0 70px rgba(255,245,232,0.42),
-    0 0 140px rgba(120,220,220,0.18),
-    0 0 180px rgba(140,100,255,0.14);
-}
-
-.breath-circle.exhale {
-  transform: scale(1);
-
-  transition-duration: 8s;
-
-  box-shadow:
-    0 0 32px rgba(255,245,232,0.28),
-    0 0 70px rgba(120,220,220,0.12);
-}
-
-.timer-text {
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  opacity: 1;
-  color: #fffaf5;
-  margin-bottom: 12px;
-  text-shadow:
-    0 2px 12px rgba(0,0,0,0.28);
-}
-
-.completion-message {
-  min-height: 24px;
-  opacity: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fffaf5;
-  text-shadow:
-    0 2px 12px rgba(0,0,0,0.28);
-  transition:
-    opacity 1s ease;
-}
-
-.completion-message.show {
-  opacity: 1;
-}
-
-.controls {
-  margin-top: 16px;
-}
-
-button {
-  border: none;
-  padding: 12px 24px;
-  border-radius: 999px;
-  margin: 0 8px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  background:
-    rgba(255,255,255,0.92);
-  color: #244b57;
-  box-shadow:
-    0 14px 32px rgba(0,0,0,0.22);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 20px 40px rgba(0,0,0,0.28);
-}
-
-.secondary {
-  background:
-    rgba(255,255,255,0.1);
-  color: white;
-  border:
-    1px solid rgba(255,255,255,0.18);
-}
-
-@keyframes rippleWave {
-  0% {
-    transform: scale(1);
-    opacity: 0.55;
-  }
-
-  100% {
-    transform: scale(2.15);
-    opacity: 0;
-  }
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(-120vh) scale(1.8);
-    opacity: 0;
-  }
-}
-
-@keyframes gradientFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes auroraMove {
-  from {
-    transform: translate(-3%, -3%) rotate(0deg);
-  }
-
-  to {
-    transform: translate(3%, 3%) rotate(8deg);
-  }
-}
-
-@keyframes shimmer {
-  from {
-    transform: translate(-8%, -8%) rotate(0deg);
-  }
-
-  to {
-    transform: translate(8%, 8%) rotate(20deg);
-  }
-}
-
-</style>
-
 <script>
-
-const circle =
-  document.getElementById("breathCircle");
-
-const breathText =
-  document.getElementById("breathText");
-
-const instruction =
-  document.getElementById("instruction");
-
-const timerText =
-  document.getElementById("timerText");
-
-const startBtn =
-  document.getElementById("startBtn");
-
-const resetBtn =
-  document.getElementById("resetBtn");
-
-const completionMessage =
-  document.getElementById("completionMessage");
-
-const breathStage =
-  document.querySelector(".breath-stage");
+const beginBtn = document.getElementById("beginBtn");
+const resetBtn = document.getElementById("resetBtn");
+const soundBtn = document.getElementById("soundBtn");
+const orb = document.getElementById("orb");
+const breathWord = document.getElementById("breathWord");
+const breathCount = document.getElementById("breathCount");
+const statusText = document.getElementById("statusText");
+const audio = document.getElementById("breathAudio");
 
 let isRunning = false;
+let soundOn = false;
+let breathTimer = null;
+let countdownTimer = null;
+let phase = "ready";
 
-let currentTimeout;
+audio.volume = 0.22;
 
-let completionTimeout;
-
-function inhale() {
-
-  if (!isRunning) return;
-
-  circle.classList.remove("exhale");
-
-  circle.classList.add("inhale");
-
-  breathText.textContent =
-    "Inhale";
-
-  instruction.textContent =
-    "Breathe in calm, compassion, and presence.";
-
-  timerText.textContent =
-    "Inhale for 4 seconds";
-
-  currentTimeout =
-    setTimeout(exhale, 4000);
+function updateSoundButton(){
+  soundBtn.textContent = soundOn ? "♫ Sound On" : "♫ Sound Off";
 }
 
-function exhale() {
+function playAudio(){
+  if(!soundOn) return;
 
-  if (!isRunning) return;
-
-  circle.classList.remove("inhale");
-
-  circle.classList.add("exhale");
-
-  breathText.textContent =
-    "Exhale";
-
-  instruction.textContent =
-    "Release tension and return to centered awareness.";
-
-  timerText.textContent =
-    "Exhale for 6 seconds";
-
-  currentTimeout =
-    setTimeout(inhale, 6000);
+  audio.play().catch(() => {
+    statusText.textContent = "Select Begin again if your browser blocks audio.";
+  });
 }
 
-startBtn.onclick = function () {
+function pauseAudio(){
+  audio.pause();
+}
 
-  if (isRunning) return;
+function resetAudio(){
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+soundBtn.addEventListener("click", () => {
+  soundOn = !soundOn;
+  updateSoundButton();
+
+  if(soundOn){
+    statusText.textContent = "Sound is on. Select Begin to start the breathing practice.";
+    if(isRunning){
+      playAudio();
+    }
+  } else {
+    statusText.textContent = "Sound is off. You can continue the breathing practice without music.";
+    pauseAudio();
+  }
+});
+
+function clearTimers(){
+  clearTimeout(breathTimer);
+  clearInterval(countdownTimer);
+}
+
+function startCountdown(seconds){
+  let remaining = seconds;
+  breathCount.textContent = remaining + " seconds";
+
+  clearInterval(countdownTimer);
+
+  countdownTimer = setInterval(() => {
+    remaining--;
+    if(remaining <= 0){
+      clearInterval(countdownTimer);
+    } else {
+      breathCount.textContent = remaining + " seconds";
+    }
+  }, 1000);
+}
+
+function inhale(){
+  if(!isRunning) return;
+
+  phase = "inhale";
+  breathWord.textContent = "Inhale";
+  orb.classList.remove("exhale");
+  orb.classList.add("inhale");
+  startCountdown(4);
+
+  breathTimer = setTimeout(() => {
+    exhale();
+  }, 4800);
+}
+
+function exhale(){
+  if(!isRunning) return;
+
+  phase = "exhale";
+  breathWord.textContent = "Exhale";
+  orb.classList.remove("inhale");
+  orb.classList.add("exhale");
+  startCountdown(6);
+
+  breathTimer = setTimeout(() => {
+    inhale();
+  }, 7200);
+}
+
+beginBtn.addEventListener("click", () => {
+  if(isRunning) return;
 
   isRunning = true;
+  statusText.textContent = soundOn
+    ? "Breathe gently. Soft piano is playing."
+    : "Breathe gently. Sound is off.";
 
-  startBtn.textContent =
-    "Breathing...";
-
-  completionMessage.classList.remove("show");
-
-  breathStage.classList.add("active");
-
+  playAudio();
   inhale();
+});
 
-  completionTimeout =
-    setTimeout(function () {
-
-      completionMessage.classList.add("show");
-
-    }, 60000);
-};
-
-resetBtn.onclick = function () {
-
+resetBtn.addEventListener("click", () => {
   isRunning = false;
+  phase = "ready";
+  clearTimers();
 
-  clearTimeout(currentTimeout);
+  orb.classList.remove("inhale", "exhale");
+  breathWord.textContent = "Ready";
+  breathCount.textContent = "Begin when ready";
+  statusText.textContent = "Sound is optional. You may complete this pause with or without music.";
 
-  clearTimeout(completionTimeout);
+  resetAudio();
+});
 
-  circle.classList.remove(
-    "inhale",
-    "exhale"
-  );
-
-  breathStage.classList.remove("active");
-
-  completionMessage.classList.remove("show");
-
-  breathText.textContent =
-    "Breathe";
-
-  instruction.textContent =
-    "Take a mindful moment to ground yourself before continuing.";
-
-  timerText.textContent =
-    "4 second inhale · 6 second exhale";
-
-  startBtn.textContent =
-    "Begin";
-};
-
+updateSoundButton();
 </script>
+
+</body>
+</html>
