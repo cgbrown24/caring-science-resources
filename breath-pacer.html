@@ -78,6 +78,41 @@ h1{
   text-shadow:0 2px 12px rgba(0,0,0,.22);
 }
 
+.sound-section{
+  margin:18px auto 0;
+  max-width:560px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.sound-btn{
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.14);
+  color:white;
+  padding:9px 18px;
+  border-radius:999px;
+  font-size:.92rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:.25s ease;
+}
+
+.sound-btn:hover{
+  background:rgba(255,255,255,.22);
+  transform:translateY(-1px);
+}
+
+.sound-message{
+  max-width:360px;
+  text-align:left;
+  font-size:.9rem;
+  line-height:1.45;
+  color:rgba(255,255,255,.92);
+}
+
 .breath-area{
   height:295px;
   display:flex;
@@ -191,41 +226,6 @@ button.main-btn:hover{
   transform:translateY(-2px);
 }
 
-.sound-section{
-  margin:18px auto 0;
-  max-width:560px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.sound-btn{
-  border:1px solid rgba(255,255,255,.35);
-  background:rgba(255,255,255,.14);
-  color:white;
-  padding:9px 18px;
-  border-radius:999px;
-  font-size:.92rem;
-  font-weight:700;
-  cursor:pointer;
-  transition:.25s ease;
-}
-
-.sound-btn:hover{
-  background:rgba(255,255,255,.22);
-  transform:translateY(-1px);
-}
-
-.sound-message{
-  max-width:360px;
-  text-align:left;
-  font-size:.9rem;
-  line-height:1.45;
-  color:rgba(255,255,255,.92);
-}
-
 .status{
   margin-top:16px;
   font-size:.95rem;
@@ -286,6 +286,16 @@ button.main-btn:hover{
         Take a moment to pause, breathe, and reconnect with yourself before continuing.
       </p>
 
+      <div class="sound-section">
+        <button class="sound-btn" id="soundBtn" aria-label="Turn sound on or off">
+          ♫ Sound Off
+        </button>
+
+        <div class="sound-message" id="soundMessage">
+          Sound is off. You can continue the breathing practice without music, or select the sound button to turn sound on.
+        </div>
+      </div>
+
       <div class="breath-area">
         <div class="orb" id="orb">
           <div class="orb-inner">
@@ -322,16 +332,6 @@ button.main-btn:hover{
         </button>
       </div>
 
-      <div class="sound-section">
-        <button class="sound-btn" id="soundBtn" aria-label="Turn sound on or off">
-          ♫ Sound Off
-        </button>
-
-        <div class="sound-message" id="soundMessage">
-          Sound is off. You can continue the breathing practice without music.
-        </div>
-      </div>
-
       <div class="status" id="statusText">
         Take this moment for yourself. There is nothing to accomplish here beyond simply being present.
       </div>
@@ -365,7 +365,7 @@ function updateSoundState(){
 
   soundMessage.textContent = soundOn
     ? "Sound is on. Select Begin to start the breathing practice."
-    : "Sound is off. You can continue the breathing practice without music.";
+    : "Sound is off. You can continue the breathing practice without music, or select the sound button to turn sound on.";
 }
 
 function playAudio(){
