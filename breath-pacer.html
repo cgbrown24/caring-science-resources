@@ -292,7 +292,7 @@ button.main-btn:hover{
         </button>
 
         <div class="sound-message" id="soundMessage">
-          Sound is off. You can continue the breathing practice without music, or select the sound button to turn sound on.
+          Sound is off. You can continue without music, or select the sound button to turn the sound on.
         </div>
       </div>
 
@@ -358,7 +358,7 @@ let soundOn = false;
 let breathTimer = null;
 let countdownTimer = null;
 
-audio.volume = 0.22;
+audio.volume = 0.35;
 
 function updateSoundState(){
   soundBtn.textContent = soundOn ? "♫ Sound On" : "♫ Sound Off";
