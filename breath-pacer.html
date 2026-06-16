@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mindful Pause Breath Pacer</title>
+<title>Return to Presence Breath Pacer</title>
 
 <style>
 :root{
@@ -15,12 +15,9 @@
   --gold:#D8B76A;
   --ivory:#FFFDF8;
   --cream:#FCFAF7;
-  --text:#FFFFFF;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 body{
   margin:0;
@@ -55,8 +52,7 @@ body{
   content:"";
   position:absolute;
   inset:-40%;
-  background:
-    radial-gradient(circle, rgba(255,255,255,.12), transparent 45%);
+  background:radial-gradient(circle, rgba(255,255,255,.12), transparent 45%);
   animation:softDrift 14s ease-in-out infinite alternate;
   pointer-events:none;
 }
@@ -82,37 +78,6 @@ h1{
   text-shadow:0 2px 12px rgba(0,0,0,.22);
 }
 
-.sound-row{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  margin:10px 0 18px;
-  flex-wrap:wrap;
-}
-
-.sound-btn{
-  border:1px solid rgba(255,255,255,.35);
-  background:rgba(255,255,255,.14);
-  color:white;
-  padding:9px 18px;
-  border-radius:999px;
-  font-size:.92rem;
-  font-weight:700;
-  cursor:pointer;
-  transition:.25s ease;
-}
-
-.sound-btn:hover{
-  background:rgba(255,255,255,.22);
-  transform:translateY(-1px);
-}
-
-.sound-note{
-  font-size:.86rem;
-  color:rgba(255,255,255,.88);
-}
-
 .breath-area{
   height:295px;
   display:flex;
@@ -125,8 +90,7 @@ h1{
   width:190px;
   height:190px;
   border-radius:50%;
-  background:
-    radial-gradient(circle at 35% 30%, rgba(255,253,248,.96), rgba(252,250,247,.86));
+  background:radial-gradient(circle at 35% 30%, rgba(255,253,248,.96), rgba(252,250,247,.86));
   box-shadow:
     0 0 28px rgba(216,183,106,.42),
     0 0 62px rgba(169,216,212,.52),
@@ -138,13 +102,8 @@ h1{
   transition:transform 6s ease-in-out;
 }
 
-.orb.inhale{
-  transform:scale(1.18);
-}
-
-.orb.exhale{
-  transform:scale(.92);
-}
+.orb.inhale{ transform:scale(1.18); }
+.orb.exhale{ transform:scale(.92); }
 
 .orb::before,
 .orb::after{
@@ -232,19 +191,51 @@ button.main-btn:hover{
   transform:translateY(-2px);
 }
 
+.sound-section{
+  margin:18px auto 0;
+  max-width:560px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.sound-btn{
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.14);
+  color:white;
+  padding:9px 18px;
+  border-radius:999px;
+  font-size:.92rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:.25s ease;
+}
+
+.sound-btn:hover{
+  background:rgba(255,255,255,.22);
+  transform:translateY(-1px);
+}
+
+.sound-message{
+  max-width:360px;
+  text-align:left;
+  font-size:.9rem;
+  line-height:1.45;
+  color:rgba(255,255,255,.92);
+}
+
 .status{
-  margin-top:14px;
+  margin-top:16px;
   font-size:.95rem;
+  line-height:1.5;
   color:rgba(255,255,255,.92);
 }
 
 @keyframes softDrift{
-  from{
-    transform:translate(-4%, -4%) rotate(0deg);
-  }
-  to{
-    transform:translate(4%, 4%) rotate(10deg);
-  }
+  from{ transform:translate(-4%, -4%) rotate(0deg); }
+  to{ transform:translate(4%, 4%) rotate(10deg); }
 }
 
 @media(max-width:600px){
@@ -270,6 +261,15 @@ button.main-btn:hover{
   .breath-word{
     font-size:1.45rem;
   }
+
+  .sound-section{
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .sound-message{
+    text-align:center;
+  }
 }
 </style>
 </head>
@@ -280,20 +280,11 @@ button.main-btn:hover{
   <div class="pacer-card">
     <div class="content">
 
-      <h1>Mindful Pause</h1>
+      <h1>Return to Presence</h1>
 
       <p class="instructions">
-        Arrive in the moment. Press begin to start your breathing practice. Breathe in for 4 seconds and breathe out for 6 seconds.
+        Take a moment to pause, breathe, and reconnect with yourself before continuing.
       </p>
-
-      <div class="sound-row">
-        <button class="sound-btn" id="soundBtn" aria-label="Turn sound on or off">
-          ♫ Sound Off
-        </button>
-        <span class="sound-note">
-          Optional soft piano
-        </span>
-      </div>
 
       <div class="breath-area">
         <div class="orb" id="orb">
@@ -331,8 +322,18 @@ button.main-btn:hover{
         </button>
       </div>
 
+      <div class="sound-section">
+        <button class="sound-btn" id="soundBtn" aria-label="Turn sound on or off">
+          ♫ Sound Off
+        </button>
+
+        <div class="sound-message" id="soundMessage">
+          Sound is off. You can continue the breathing practice without music.
+        </div>
+      </div>
+
       <div class="status" id="statusText">
-        Sound is optional. You may complete this pause with or without music.
+        Take this moment for yourself. There is nothing to accomplish here beyond simply being present.
       </div>
 
       <audio id="breathAudio" src="audio/breath-piano.mp3" loop preload="auto"></audio>
@@ -345,6 +346,7 @@ button.main-btn:hover{
 const beginBtn = document.getElementById("beginBtn");
 const resetBtn = document.getElementById("resetBtn");
 const soundBtn = document.getElementById("soundBtn");
+const soundMessage = document.getElementById("soundMessage");
 const orb = document.getElementById("orb");
 const breathWord = document.getElementById("breathWord");
 const breathCount = document.getElementById("breathCount");
@@ -355,19 +357,22 @@ let isRunning = false;
 let soundOn = false;
 let breathTimer = null;
 let countdownTimer = null;
-let phase = "ready";
 
 audio.volume = 0.22;
 
-function updateSoundButton(){
+function updateSoundState(){
   soundBtn.textContent = soundOn ? "♫ Sound On" : "♫ Sound Off";
+
+  soundMessage.textContent = soundOn
+    ? "Sound is on. Select Begin to start the breathing practice."
+    : "Sound is off. You can continue the breathing practice without music.";
 }
 
 function playAudio(){
   if(!soundOn) return;
 
   audio.play().catch(() => {
-    statusText.textContent = "Select Begin again if your browser blocks audio.";
+    soundMessage.textContent = "Sound is on. Select Begin again if your browser blocks audio.";
   });
 }
 
@@ -382,15 +387,13 @@ function resetAudio(){
 
 soundBtn.addEventListener("click", () => {
   soundOn = !soundOn;
-  updateSoundButton();
+  updateSoundState();
 
-  if(soundOn){
-    statusText.textContent = "Sound is on. Select Begin to start the breathing practice.";
-    if(isRunning){
-      playAudio();
-    }
-  } else {
-    statusText.textContent = "Sound is off. You can continue the breathing practice without music.";
+  if(soundOn && isRunning){
+    playAudio();
+  }
+
+  if(!soundOn){
     pauseAudio();
   }
 });
@@ -408,6 +411,7 @@ function startCountdown(seconds){
 
   countdownTimer = setInterval(() => {
     remaining--;
+
     if(remaining <= 0){
       clearInterval(countdownTimer);
     } else {
@@ -419,7 +423,6 @@ function startCountdown(seconds){
 function inhale(){
   if(!isRunning) return;
 
-  phase = "inhale";
   breathWord.textContent = "Inhale";
   orb.classList.remove("exhale");
   orb.classList.add("inhale");
@@ -433,7 +436,6 @@ function inhale(){
 function exhale(){
   if(!isRunning) return;
 
-  phase = "exhale";
   breathWord.textContent = "Exhale";
   orb.classList.remove("inhale");
   orb.classList.add("exhale");
@@ -448,9 +450,9 @@ beginBtn.addEventListener("click", () => {
   if(isRunning) return;
 
   isRunning = true;
-  statusText.textContent = soundOn
-    ? "Breathe gently. Soft piano is playing."
-    : "Breathe gently. Sound is off.";
+
+  statusText.textContent =
+    "Take this moment for yourself. There is nothing to accomplish here beyond simply being present.";
 
   playAudio();
   inhale();
@@ -458,18 +460,19 @@ beginBtn.addEventListener("click", () => {
 
 resetBtn.addEventListener("click", () => {
   isRunning = false;
-  phase = "ready";
   clearTimers();
 
   orb.classList.remove("inhale", "exhale");
   breathWord.textContent = "Ready";
   breathCount.textContent = "Begin when ready";
-  statusText.textContent = "Sound is optional. You may complete this pause with or without music.";
+
+  statusText.textContent =
+    "Take this moment for yourself. There is nothing to accomplish here beyond simply being present.";
 
   resetAudio();
 });
 
-updateSoundButton();
+updateSoundState();
 </script>
 
 </body>
